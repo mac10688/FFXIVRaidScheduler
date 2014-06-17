@@ -1,0 +1,100 @@
+﻿@model RaidScheduler.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = "";
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - FFXIV Raid Scheduler</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/css/kendo")
+    @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css">
+        body {
+            background: url(/Content/garuda-ffxiv-arr.png) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        html, body, .container {
+            height: 100%;
+        }
+
+        .container {
+            display: table;
+            vertical-align: middle;
+        }
+
+        .vertical-center-row {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        h4, label, p {
+            color: black;
+        }
+
+        .translucent {
+            background-color: #fff;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section id="loginForm" class="vertical-center-row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="row translucent">
+                    <div class="col-md-12 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">
+                        <form action="/Account/Login" method="post" role="form">
+                            @Html.AntiForgeryToken()
+                            <h4>FFXIV Raid Scheduler</h4>
+                            <hr />
+                            @Html.ValidationSummary(true)
+
+                            <div class="inner cover">
+                                <div class="form-group">
+                                    <label class="col-md-12">User Name <input class="col-md-10 form-control" type="text" name="UserName" /></label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">Password <input class="col-md-10 form-control" type="password" name="Password" /></label>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="checkbox">
+                                        <label class="col-md-12">Remember Me <input type="checkbox" name="RememberMe" /> </label>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                        <div class="col-md-8 col-md-offset-4">
+                                            <input type="submit" value="Log in" class="btn btn-default " />
+                                        </div>
+                                    </div>
+                                <p>
+                                    @Html.ActionLink("Register", "Register") if you don't have a local account.
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
+@Scripts.Render("~/bundles/jquery")    
+@Scripts.Render("~/bundles/jqueryval")    
+@Scripts.Render("~/bundles/bootstrap")
+<script>
+    $(document).ready(function () {
+        
+    });
+</script>

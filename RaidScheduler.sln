@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Web
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.WebUI", "RaidScheduler\RaidScheduler.WebUI.csproj", "{4BBF2D96-3DFF-4F0C-BFBE-1A20228ACAC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.WebUI.Tests", "RaidScheduler.Tests\RaidScheduler.WebUI.Tests.csproj", "{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.Entities", "RaidScheduler.Entities\RaidScheduler.Entities.csproj", "{BFFA7604-CB66-4C8F-966B-A832D01C6914}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.Data", "RaidScheduler.Data\RaidScheduler.Data.csproj", "{7096559B-5083-4851-9834-2D25A18D49DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.Domain", "LogicLayer\RaidScheduler.Domain.csproj", "{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BBF2D96-3DFF-4F0C-BFBE-1A20228ACAC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BBF2D96-3DFF-4F0C-BFBE-1A20228ACAC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BBF2D96-3DFF-4F0C-BFBE-1A20228ACAC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BBF2D96-3DFF-4F0C-BFBE-1A20228ACAC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7096559B-5083-4851-9834-2D25A18D49DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7096559B-5083-4851-9834-2D25A18D49DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7096559B-5083-4851-9834-2D25A18D49DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7096559B-5083-4851-9834-2D25A18D49DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

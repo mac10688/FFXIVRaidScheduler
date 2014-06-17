@@ -1,0 +1,43 @@
+﻿@model RaidScheduler.Models.PlayerCombinationsModel
+
+<div data-bind="template: { name: 'PartyCombination-Template', foreach: Parties }"></div>
+
+<script type="text/html" id="PartyCombination-Template">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"  data-bind="text: RaidName">
+            </h3>
+        </div>
+        <div class="panel-body">
+            <ul data-bind="foreach: PartyCombination">
+                <li>
+                    <span data-bind="text: PlayerName"></span>
+                    &nbsp;
+                    <span data-bind="text: ChosenJob"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <ul data-bind="foreach: ScheduleTimes">
+                <li>
+                    <span data-bind="text: $data"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</script>
+
+@section Scripts 
+{
+
+    <script type="text/javascript" src="~/Scripts/RaidSchdulerScripts/PlayerCombination.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var jsonModel = @Html.Raw(Json.Encode(@Model))
+            viewModel = new PlayerCombinationsModel(jsonModel);
+            ko.applyBindings(viewModel);
+        });
+
+    </script>
+}

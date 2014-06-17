@@ -1,0 +1,83 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+using NodaTime;
+using System.ComponentModel.DataAnnotations;
+
+namespace RaidScheduler.Models
+{
+    public class PlayerPreferencesModel
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public string SelectedTimeZone { get; set; }
+
+        private IList<string> timeZoneList = new List<string>();
+        public IList<string> TimeZoneList { get; set; }
+
+        private IList<PlayerPotentialJobModel> playerPotentialJobs = new List<PlayerPotentialJobModel>();
+        public IList<PlayerPotentialJobModel> PlayerPotentialJobs { get { return playerPotentialJobs; } set { playerPotentialJobs = value; } }
+
+        private IList<JobModel> potentialJobsToChoose = new List<JobModel>();
+        public IList<JobModel> PotentialJobsToChoose { get { return potentialJobsToChoose; } set { potentialJobsToChoose = value; } }
+
+        private IList<DayAndTimeAvailableModel> daysAndTimesAvailable = new List<DayAndTimeAvailableModel>();
+        public IList<DayAndTimeAvailableModel> DaysAndTimesAvailable { get { return daysAndTimesAvailable; } set { daysAndTimesAvailable = value; } }
+
+        private IList<string> raidsRequested = new List<string>();
+        public IList<string> RaidsRequested { get { return raidsRequested; } set { raidsRequested = value; } }
+
+        private IList<string> raidsAvailable = new List<string>();
+        public IList<string> RaidsAvailable { get { return raidsAvailable; } set { raidsAvailable = value; } }
+
+        private IList<string> daysToChoose = new List<string>();
+        public IList<string> DaysToChoose { get { return daysToChoose; } set { daysToChoose = value; } }
+
+    }
+
+    public class PlayerPotentialJobModel
+    {
+        public int PlayerPotentialJobID { get; set; }
+        [Required]
+        public int PotentialJobID { get; set; }
+        [Required]
+        public int ILvl { get; set; }
+        [Required, Range(0,10)]
+        public int ComfortLevel { get; set; }
+    }
+
+    public class PlayerRaidRequestedModel
+    {
+        public int RaidID { get; set; }
+    }
+
+    public class DayAndTimeAvailableModel
+    {
+        public int DayAndTimeAvailableModelID { get; set; }
+        [Required]
+        public string Day { get; set; }
+        [Required]
+        public long TimeAvailableStart { get; set; }
+        [Required]
+        public long TimeAvailableEnd { get; set; }
+        [Required]
+        public long TimeDurationLimit { get; set; }
+        public bool IsTentative { get; set; }
+    }
+
+    public class RaidModel
+    {
+        public int RaidID { get; set; }
+        public string RaidName { get; set; }
+    }
+
+    public class JobModel
+    {
+        public int JobID { get; set; }
+        public string JobName { get; set; }
+    }
+
+}

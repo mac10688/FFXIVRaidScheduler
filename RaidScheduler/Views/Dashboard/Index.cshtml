@@ -1,0 +1,13 @@
+﻿<div id="PieChartContainer" style="width: 900px; height: 500px;">
+
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+        $(document).ready(function () {
+            $('#PieChartContainer').load("/Dashboard/PlayerPercentageChart/");
+        });
+    </script>    
+}
