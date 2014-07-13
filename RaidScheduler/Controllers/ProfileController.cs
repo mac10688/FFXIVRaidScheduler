@@ -51,6 +51,10 @@ namespace RaidScheduler.Controllers
             this.staticPartyRepository = staticPartyRepository;
         }
 
+        /// <summary>
+        /// Returns the view for a player to edit their profile.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PlayerEdit()
         {
             PlayerPreferencesModel model = new PlayerPreferencesModel();
@@ -105,6 +109,12 @@ namespace RaidScheduler.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Given a player preference model, this will save. If it fails it will return Message: "fail".
+        /// if it succeeds, it will return Message: success
+        /// </summary>
+        /// <param name="playerPreferences"></param>
+        /// <returns></returns>
         public JsonResult SavePlayer(PlayerPreferencesModel playerPreferences)
         {
             try

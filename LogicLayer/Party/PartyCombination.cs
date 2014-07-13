@@ -29,6 +29,11 @@ namespace RaidScheduler.Domain
             this.schedulingLogic = schedulingLogic;
         }
 
+        /// <summary>
+        /// Creates a static party from the collection of players given.
+        /// </summary>
+        /// <param name="playerCollection"></param>
+        /// <returns></returns>
         public ICollection<StaticParty> CreateStaticPartiesFromPlayers(ICollection<Player> playerCollection)
         {
             var result = new List<StaticParty>();
@@ -78,6 +83,13 @@ namespace RaidScheduler.Domain
             return result;
         }
 
+        /// <summary>
+        /// Finds a collection of potential players that have common schedules, and necessary jobs to complete the raid.
+        /// </summary>
+        /// <param name="raidsRequested"></param>
+        /// <param name="party"></param>
+        /// <param name="potentialPlayer"></param>
+        /// <returns></returns>
         public ICollection<StaticMember> FindPotentialPartyCombination(Raid raidsRequested, StaticParty party, Player potentialPlayer)
         {
             var jobsNeeded = WhatDoesStaticPartyNeed(raidsRequested, party.StaticMembers);
@@ -102,6 +114,15 @@ namespace RaidScheduler.Domain
             return newMembers;
         }
 
+        /// <summary>
+        /// Finds a collection of potential players that have common schedules, and necessary jobs to complete the raid.
+        /// This function is meant for recursion.
+        /// </summary>
+        /// <param name="raid"></param>
+        /// <param name="limit"></param>
+        /// <param name="allocatedMembers"></param>
+        /// <param name="unallocatedmembers"></param>
+        /// <returns></returns>
         public ICollection<StaticMember> FindAPartyCombination(Raid raid, int limit, ICollection<StaticMember> allocatedMembers, ICollection<Player> unallocatedmembers)
         {
             var jobsNeeded = WhatDoesStaticPartyNeed(raid, allocatedMembers);
@@ -135,7 +156,12 @@ namespace RaidScheduler.Domain
             return result;
         }
 
-        //Create method that returns all possible static parties based on member setup
+        /// <summary>
+        /// Returns a collection of jobs possibly needed for the raid.
+        /// </summary>
+        /// <param name="raidsRequested"></param>
+        /// <param name="currentStaticMembers"></param>
+        /// <returns></returns>
         public ICollection<Job> WhatDoesStaticPartyNeed(ICollection<Raid> raidsRequested, ICollection<StaticMember> currentStaticMembers)
         {
             var jobsNeededOverall = new List<Job>();
@@ -149,6 +175,12 @@ namespace RaidScheduler.Domain
             return jobsNeededOverall;
         }
 
+        /// <summary>
+        /// Returns a collection of jobs possibly needed for the raid.
+        /// </summary>
+        /// <param name="raid"></param>
+        /// <param name="currentStaticMembers"></param>
+        /// <returns></returns>
         public ICollection<Job> WhatDoesStaticPartyNeed(Raid raid, ICollection<StaticMember> currentStaticMembers)
         {
             var result = new List<Job>();
@@ -159,6 +191,15 @@ namespace RaidScheduler.Domain
 
             var criteria = raid.RaidCriteria.Single();
 
+            if (criteria.NumberOfTanks.HasValue)
+            {
+                var numberOfTanks = chosenJobs.Where(j => j.Job.IsTank).Count();
+                if (numberOfTanks < criteria.NumberOfTanks)
+                {
+                    var jobs = allJobs.Where(j => j.IsTank);
+                    result.AddRange(jobs);
+                }
+            }
             if (criteria.NumberOfDps.HasValue)
             {
                 var numberOfDps = chosenJobs.Where(j => j.Job.IsDps).Count();
@@ -180,7 +221,13 @@ namespace RaidScheduler.Domain
             if (criteria.NumberOfMagicalDps.HasValue)
             {
                 var numberOfMagicalDps = chosenJobs.Where(j => j.Job.IsMagicalDps).Count();
-                if (numberOfMagicalDps < criteria.NumberOfMagicalDps)
+                var totalNumberOfDpsAlreadyAdded = result.Where(r => r.IsDps).Count();
+                var isDpsCountOk = true;
+                if(criteria.NumberOfDps.HasValue)
+                {
+                    isDpsCountOk = result.Where(j => j.IsDps).Count() < criteria.NumberOfDps;
+                }
+                if (numberOfMagicalDps < criteria.NumberOfMagicalDps && isDpsCountOk)
                 {
                     var jobs = allJobs.Where(j => j.IsMagicalDps);
                     result.AddRange(jobs);
@@ -189,7 +236,12 @@ namespace RaidScheduler.Domain
             if (criteria.NumberOfMeleeDps.HasValue)
             {
                 var numberOfMeleeDps = chosenJobs.Where(j => j.Job.IsMeleeDps).Count();
-                if (numberOfMeleeDps < criteria.NumberOfMeleeDps)
+                var isDpsCountOk = true;
+                if (criteria.NumberOfDps.HasValue)
+                {
+                    isDpsCountOk = result.Where(j => j.IsDps).Count() < criteria.NumberOfDps;
+                }
+                if (numberOfMeleeDps < criteria.NumberOfMeleeDps && isDpsCountOk)
                 {
                     var jobs = allJobs.Where(j => j.IsMeleeDps);
                     result.AddRange(jobs);
@@ -198,7 +250,12 @@ namespace RaidScheduler.Domain
             if (criteria.NumberOfPhysicalDps.HasValue)
             {
                 var numberOfPhysicalDps = chosenJobs.Where(j => j.Job.IsPhysicalDps).Count();
-                if (numberOfPhysicalDps < criteria.NumberOfPhysicalDps)
+                var isDpsCountOk = true;
+                if (criteria.NumberOfDps.HasValue)
+                {
+                    isDpsCountOk = result.Where(j => j.IsDps).Count() < criteria.NumberOfDps;
+                }
+                if (numberOfPhysicalDps < criteria.NumberOfPhysicalDps && isDpsCountOk)
                 {
                     var jobs = allJobs.Where(j => j.IsPhysicalDps);
                     result.AddRange(jobs);
@@ -207,7 +264,12 @@ namespace RaidScheduler.Domain
             if (criteria.NumberOfRangedDps.HasValue)
             {
                 var numberOfRangedDps = chosenJobs.Where(j => j.Job.IsRangedDps).Count();
-                if (numberOfRangedDps < criteria.NumberOfRangedDps)
+                var isDpsCountOk = true;
+                if (criteria.NumberOfDps.HasValue)
+                {
+                    isDpsCountOk = result.Where(j => j.IsDps).Count() < criteria.NumberOfDps;
+                }
+                if (numberOfRangedDps < criteria.NumberOfRangedDps && isDpsCountOk)
                 {
                     var jobs = allJobs.Where(j => j.IsRangedDps);
                     result.AddRange(jobs);
@@ -216,30 +278,60 @@ namespace RaidScheduler.Domain
             if (criteria.NumberOfSilencers.HasValue)
             {
                 var numberOfSilencers = chosenJobs.Where(j => j.Job.CanSilence).Count();
+
+                var isDpsCountOk = true;
+                if(criteria.NumberOfDps.HasValue)
+                {
+                    isDpsCountOk = result.Where(j => j.IsDps).Count() < criteria.NumberOfDps;
+                }
+
+                var isTankCountOk = true;
+                if(criteria.NumberOfTanks.HasValue)
+                {
+                    isTankCountOk = result.Where(j => j.IsTank).Count() < criteria.NumberOfTanks;
+                }
+                
+                var isHealerCountOk = true;
+                if(criteria.NumberOfHealers.HasValue)
+                {
+                    isHealerCountOk = result.Where(j => j.IsHealer).Count() < criteria.NumberOfHealers;
+                }
+
                 if (numberOfSilencers < criteria.NumberOfSilencers)
                 {
-                    var jobs = allJobs.Where(j => j.CanSilence);
+                    var jobs = allJobs.Where(j => j.CanSilence && (j.IsTank == isTankCountOk || j.IsHealer == isHealerCountOk || j.IsDps == isDpsCountOk));
                     result.AddRange(jobs);
                 }
             }
             if (criteria.NumberOfStunners.HasValue)
             {
                 var numberOfStunners = chosenJobs.Where(j => j.Job.CanStun).Count();
+
+                var isDpsCountOk = true;
+                if (criteria.NumberOfDps.HasValue)
+                {
+                    isDpsCountOk = result.Where(j => j.IsDps).Count() < criteria.NumberOfDps;
+                }
+
+                var isTankCountOk = true;
+                if (criteria.NumberOfTanks.HasValue)
+                {
+                    isTankCountOk = result.Where(j => j.IsTank).Count() < criteria.NumberOfTanks;
+                }
+
+                var isHealerCountOk = true;
+                if (criteria.NumberOfHealers.HasValue)
+                {
+                    isHealerCountOk = result.Where(j => j.IsHealer).Count() < criteria.NumberOfHealers;
+                }
+
                 if (numberOfStunners < criteria.NumberOfStunners)
                 {
-                    var jobs = allJobs.Where(j => j.CanStun);
+                    var jobs = allJobs.Where(j => j.CanStun && (j.IsTank == isTankCountOk || j.IsHealer == isHealerCountOk || j.IsDps == isDpsCountOk));
                     result.AddRange(jobs);
                 }
             }
-            if (criteria.NumberOfTanks.HasValue)
-            {
-                var numberOfTanks = chosenJobs.Where(j => j.Job.IsTank).Count();
-                if (numberOfTanks < criteria.NumberOfTanks)
-                {
-                    var jobs = allJobs.Where(j => j.IsTank);
-                    result.AddRange(jobs);
-                }
-            }
+            
 
             result = result.DistinctBy(j => j.JobID).ToList();
 

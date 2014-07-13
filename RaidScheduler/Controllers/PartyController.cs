@@ -48,6 +48,10 @@ namespace RaidScheduler.Controllers
             this.potentialJobRepository = potentialJobRepository;
         }
 
+        /// <summary>
+        /// This will get the View to choose the player to inspect.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PlayerChoice()
         {
             
@@ -72,6 +76,10 @@ namespace RaidScheduler.Controllers
             return View(modelCollection);
         }
 
+        /// <summary>
+        /// Returns view for computed party results
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PlayerCombinations()
         {
             PlayerCombinationsModel model = new PlayerCombinationsModel();
@@ -116,6 +124,10 @@ namespace RaidScheduler.Controllers
             return View(model);
         } 
 
+        /// <summary>
+        /// Returns a view for creating a static party
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateParty()
         {
             return View();

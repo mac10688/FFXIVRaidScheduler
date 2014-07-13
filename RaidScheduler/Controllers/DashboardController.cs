@@ -26,6 +26,10 @@ namespace RaidScheduler.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Finds the ration of jobs and people with those jobs
+        /// </summary>
+        /// <returns>Partial View of job percentage</returns>
         public ActionResult PlayerPercentageChart()
         {
             var jobAndCountModel = new JobPercentageModel();

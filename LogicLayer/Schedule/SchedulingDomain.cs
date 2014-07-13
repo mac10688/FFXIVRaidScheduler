@@ -10,6 +10,11 @@ namespace RaidScheduler.Domain
 {
     public class SchedulingDomain : ISchedulingDomain
     {
+        /// <summary>
+        /// Given a collection of players, find a collection of contiguous play times.
+        /// </summary>
+        /// <param name="playerCollection"></param>
+        /// <returns></returns>
         public ICollection<DayAndTime> CommonScheduleAmongAllPlayers(ICollection<Player> playerCollection)
         {
             var currentCollection = new List<DayAndTime>();
@@ -43,6 +48,12 @@ namespace RaidScheduler.Domain
             return currentCollection;
         }
 
+        /// <summary>
+        /// Given a dayAndTime object and bcl timezone, create a new DayAndTime object that is in UTC.
+        /// </summary>
+        /// <param name="dayAndTime"></param>
+        /// <param name="timezone"></param>
+        /// <returns></returns>
         private DayAndTime ConvertToUTC(DayAndTime dayAndTime, string timezone)
         {
             var tz = DateTimeZoneProviders.Bcl.GetZoneOrNull(timezone);
@@ -52,6 +63,12 @@ namespace RaidScheduler.Domain
             return result;
         }
 
+        /// <summary>
+        /// Given a dayAndTime in utc object and bcl timezone, create a new DayAndTime object that is translated to the new timezone.
+        /// </summary>
+        /// <param name="dayAndTime"></param>
+        /// <param name="timezone"></param>
+        /// <returns></returns>
         private DayAndTime ConvertUtcToTimezone(DayAndTime dayAndTime, string timezone)
         {
             var tz = DateTimeZoneProviders.Bcl.GetZoneOrNull(timezone);
@@ -61,6 +78,12 @@ namespace RaidScheduler.Domain
             return result;
         }
 
+        /// <summary>
+        /// Given a dayAndTime object, apply the offset of ticks and return a new dayAndTime object with the applied offset.
+        /// </summary>
+        /// <param name="dayAndTime"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
         private DayAndTime ApplyOffsetToToDayAndTime(DayAndTime dayAndTime, long offset)
         {
             var day = dayAndTime.DayOfWeek;
@@ -93,6 +116,11 @@ namespace RaidScheduler.Domain
             return result;
         }
 
+        /// <summary>
+        /// Given an IsoDayOfWeek find the previous day. Note* IsoDayOfWeek is circular
+        /// </summary>
+        /// <param name="day"></param>
+        /// <returns></returns>
         private IsoDayOfWeek GoBackADay(IsoDayOfWeek day)
         {
             var newDay = (int)day - 1;
@@ -101,6 +129,11 @@ namespace RaidScheduler.Domain
             return result;
         }
 
+        /// <summary>
+        /// Given an IsoDayOfWeek find the next day. Note* IsoDayOfWeek is circular
+        /// </summary>
+        /// <param name="day"></param>
+        /// <returns></returns>
         private IsoDayOfWeek GoForwardADay(IsoDayOfWeek day)
         {
             var newDay = (int)day + 1;
@@ -109,6 +142,12 @@ namespace RaidScheduler.Domain
             return result;
         }
 
+        /// <summary>
+        /// Given a two dayAndTimeObjects, find their common time. Return new DayAndTime object.
+        /// </summary>
+        /// <param name="leftSide"></param>
+        /// <param name="rightSide"></param>
+        /// <returns>DayAndTime object</returns>
         private DayAndTime DayAndTimeOverlap(DayAndTime leftSide, DayAndTime rightSide)
         {
             DayAndTime result = null;

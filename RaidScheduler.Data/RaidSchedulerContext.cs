@@ -40,6 +40,10 @@ namespace RaidScheduler.Data
         /// </summary>
         public override IDbSet<User> Users { get; set; }
 
+        /// <summary>
+        /// Configure the relationships of the entities.
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

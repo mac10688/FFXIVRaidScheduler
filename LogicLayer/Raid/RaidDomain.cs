@@ -9,6 +9,11 @@ namespace RaidScheduler.Domain
 {
     public class RaidDomain : IRaidDomain
     {
+        /// <summary>
+        /// Given a collection of players, find the common raids requested.
+        /// </summary>
+        /// <param name="playerCollection"></param>
+        /// <returns></returns>
         public ICollection<Raid> CommonRaidsRequested(ICollection<Player> playerCollection)
         {
             var raidsRequested = new List<Raid>();
