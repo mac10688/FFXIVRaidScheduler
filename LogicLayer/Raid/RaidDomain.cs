@@ -17,26 +17,29 @@ namespace RaidScheduler.Domain
         public ICollection<Raid> CommonRaidsRequested(ICollection<Player> playerCollection)
         {
             var raidsRequested = new List<Raid>();
-            foreach (var sMember in playerCollection)
+            if (playerCollection != null)
             {
-                var raids = sMember.RaidsRequested.Select(r => r.Raid);
-                if (!raidsRequested.Any())
+                foreach (var sMember in playerCollection)
                 {
-                    raidsRequested.AddRange(raids);
-                }
-                else
-                {
-                    var raidsToRemove = new List<Raid>();
-                    foreach (var raid in raidsRequested)
+                    var raids = sMember.RaidsRequested.Select(r => r.Raid);
+                    if (!raidsRequested.Any())
                     {
-                        if (!raids.Any(r => r.RaidID == raid.RaidID))
-                        {
-                            raidsToRemove.Add(raid);
-                        }
+                        raidsRequested.AddRange(raids);
                     }
-                    foreach (var raid in raidsToRemove)
+                    else
                     {
-                        raidsRequested.Remove(raid);
+                        var raidsToRemove = new List<Raid>();
+                        foreach (var raid in raidsRequested)
+                        {
+                            if (!raids.Any(r => r.RaidID == raid.RaidID))
+                            {
+                                raidsToRemove.Add(raid);
+                            }
+                        }
+                        foreach (var raid in raidsToRemove)
+                        {
+                            raidsRequested.Remove(raid);
+                        }
                     }
                 }
             }
