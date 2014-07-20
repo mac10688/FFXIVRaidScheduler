@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using NodaTime;
-using RaidScheduler.Entities;
-using RaidScheduler.Data;
+using RaidScheduler.Domain;
+using RaidScheduler.Domain.Repositories;
+using RaidScheduler.Domain.DomainModels;
 
 using MoreLinq;
 
@@ -41,12 +42,11 @@ namespace RaidScheduler.Domain
             var allRaids = raidRepository.Get();
             foreach (var raid in allRaids)
             {
-                var raidPlayerCollection = playerCollection.Where(p => p.RaidsRequested.Where(r => r.Raid.RaidID == raid.RaidID).Any()).ToList();
+                var raidPlayerCollection = playerCollection.Where(p => p.RaidsRequested.Where(r => r.Raid.RaidId == raid.RaidId).Any()).ToList();
                 var stillPossibilities = false;
                 if (raidPlayerCollection.Any())
                 {
-                    var currentParty = new StaticParty();
-                    currentParty.Raid = raid;
+                    var currentParty = new StaticParty(raid, null, null);
                     result.Add(currentParty);
                     do
                     {
@@ -61,8 +61,9 @@ namespace RaidScheduler.Domain
                                 //Ok, the player has the schedule and has the job, let's add him to the static party.
                                 if (staticMembers.Select(m => m.Player).Contains(player))
                                 {
-                                    currentParty.StaticMembers = staticMembers;
-                                    currentParty.ScheduledTimes = potentialStaticSchedules.Select(p => new StaticPartyDayAndTimeSchedule { DayAndTime = p}).ToList();
+                                    currentParty.SetStaticMembers(staticMembers);
+                                    var times = potentialStaticSchedules.Select(p => new StaticPartyDayAndTimeSchedule { DayAndTime = p}).ToList();
+                                    currentParty.SetScheduledTimes(times);
 
                                     raidPlayerCollection.Remove(player);
                                     stillPossibilities = true;
@@ -70,8 +71,7 @@ namespace RaidScheduler.Domain
                                 }
                                 if (currentParty.StaticMembers.Count() >= raid.RaidCriteria.First().NumberOfPlayersRequired)
                                 {
-                                    currentParty = new StaticParty();
-                                    currentParty.Raid = raid;
+                                    currentParty = new StaticParty(raid,null,null);
                                     result.Add(currentParty);
                                 }
                             }
@@ -97,10 +97,10 @@ namespace RaidScheduler.Domain
             foreach (var pJob in potentialPlayer.PotentialJobs)
             {
                 //This player already fits, no need to rearrange the party
-                if (jobsNeeded.Any(j => j.JobID == pJob.Job.JobID))
+                if (jobsNeeded.Any(j => j.JobId == pJob.Job.JobId))
                 {
                     var members = party.StaticMembers.ToList();
-                    members.Add(new StaticMember { Player = potentialPlayer, ChosenPotentialJob = pJob });
+                    members.Add(new StaticMember(potentialPlayer, null, pJob));
                     return members;
                 }
             }
@@ -131,10 +131,10 @@ namespace RaidScheduler.Domain
             {
                 foreach (var job in player.PotentialJobs)
                 {
-                    if (jobsNeeded.Any(j => j.JobID == job.Job.JobID))
+                    if (jobsNeeded.Any(j => j.JobId == job.Job.JobId))
                     {
                         var newStaticMemberList = allocatedMembers.ToList();
-                        newStaticMemberList.Add(new StaticMember { ChosenPotentialJob = job, Player = player });
+                        newStaticMemberList.Add(new StaticMember(player, null, job));
 
                         if (newStaticMemberList.Count() >= limit)
                         {
@@ -171,7 +171,7 @@ namespace RaidScheduler.Domain
                 jobsNeededOverall.AddRange(jobsNeeded);
             }
 
-            jobsNeededOverall = jobsNeededOverall.DistinctBy(j => j.JobID).ToList();
+            jobsNeededOverall = jobsNeededOverall.DistinctBy(j => j.JobId).ToList();
             return jobsNeededOverall;
         }
 
@@ -184,6 +184,8 @@ namespace RaidScheduler.Domain
         public ICollection<Job> WhatDoesStaticPartyNeed(Raid raid, ICollection<StaticMember> currentStaticMembers)
         {
             var result = new List<Job>();
+
+            
 
             var chosenJobs = currentStaticMembers.Select(s => s.ChosenPotentialJob);
 
@@ -333,7 +335,7 @@ namespace RaidScheduler.Domain
             }
             
 
-            result = result.DistinctBy(j => j.JobID).ToList();
+            result = result.DistinctBy(j => j.JobId).ToList();
 
             return result;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RaidScheduler.Entities;
+using RaidScheduler.DTO;
 using System.Data.Entity;
 using System.Linq.Expressions;
 

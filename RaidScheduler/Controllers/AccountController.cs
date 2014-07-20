@@ -8,12 +8,12 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using RaidScheduler.Models;
+using RaidScheduler.WebUI.Models;
 using System.Configuration;
 
-using RaidScheduler.Entities;
+using RaidScheduler.Domain.DomainModels;
 using NodaTime;
-using RaidScheduler.Data;
+using RaidScheduler.Domain;
 using NodaTime.TimeZones;
 
 namespace RaidScheduler.Controllers

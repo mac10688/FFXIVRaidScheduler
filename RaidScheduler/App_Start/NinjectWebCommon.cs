@@ -10,13 +10,15 @@ namespace RaidScheduler.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using RaidScheduler.Data;
+
     using System.Data.Entity;
     using Microsoft.AspNet.Identity.EntityFramework;
-    using RaidScheduler.Entities;
-    using RaidScheduler.Data.Repositories;
+
     using RaidScheduler.Domain;
+    using RaidScheduler.Domain.DomainModels;
+    using RaidScheduler.Domain.Repositories;
     using Microsoft.AspNet.Identity;
+    using RaidScheduler.Domain.Data;
 
     public static class NinjectWebCommon 
     {

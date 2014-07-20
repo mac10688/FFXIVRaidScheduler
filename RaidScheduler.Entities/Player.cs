@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
 
-namespace RaidScheduler.Entities
+namespace RaidScheduler.DTO
 {
     public class Player
     {

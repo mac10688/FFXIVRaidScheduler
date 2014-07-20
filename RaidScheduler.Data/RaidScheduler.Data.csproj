@@ -87,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseInitializer.cs" />
+    <Compile Include="Helper\JobFactory.cs" />
+    <Compile Include="Helper\RaidFactory.cs" />
     <Compile Include="Migrations\201405082225555_Initial Create.cs" />
     <Compile Include="Migrations\201405082225555_Initial Create.Designer.cs">
       <DependentUpon>201405082225555_Initial Create.cs</DependentUpon>
@@ -111,9 +113,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RaidScheduler.Entities\RaidScheduler.Entities.csproj">
+    <ProjectReference Include="..\RaidScheduler.Entities\RaidScheduler.DTO.csproj">
       <Project>{bffa7604-cb66-4c8f-966b-a832d01c6914}</Project>
-      <Name>RaidScheduler.Entities</Name>
+      <Name>RaidScheduler.DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

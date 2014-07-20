@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaidScheduler.Entities
+namespace RaidScheduler.DTO
 {
     public class RaidCriteria
     {
@@ -24,6 +24,7 @@ namespace RaidScheduler.Entities
 
         public int RaidID { get; set; }
         public virtual Raid Raid { get; set; }
-
     }
+
+
 }

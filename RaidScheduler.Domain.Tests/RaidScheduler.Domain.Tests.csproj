@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
@@ -48,6 +54,8 @@
       <HintPath>..\packages\Ninject.MockingKernel.Moq.3.2.0.0\lib\net45-full\Ninject.MockingKernel.Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -70,10 +78,6 @@
     <ProjectReference Include="..\LogicLayer\RaidScheduler.Domain.csproj">
       <Project>{17a7474c-f0aa-48f5-b0db-78bd05be70de}</Project>
       <Name>RaidScheduler.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RaidScheduler.Entities\RaidScheduler.Entities.csproj">
-      <Project>{bffa7604-cb66-4c8f-966b-a832d01c6914}</Project>
-      <Name>RaidScheduler.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

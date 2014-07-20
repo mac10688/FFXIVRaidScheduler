@@ -1,4 +1,4 @@
-﻿using RaidScheduler.Entities;
+﻿using RaidScheduler.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

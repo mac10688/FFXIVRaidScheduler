@@ -1,5 +1,5 @@
 ﻿using NodaTime;
-using RaidScheduler.Entities;
+using RaidScheduler.Domain.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,10 +109,7 @@ namespace RaidScheduler.Domain
                 endTime = endTime - NodaConstants.TicksPerStandardDay;
             }
 
-            var result = new DayAndTime();
-            result.DayOfWeek = day;
-            result.TimeStart = startTime;
-            result.TimeEnd = endTime;
+            var result = new DayAndTime(day, startTime, endTime);
             return result;
         }
 
@@ -181,12 +178,11 @@ namespace RaidScheduler.Domain
                     {
                         endTime = leftEndTime;
                     }
+                    
+                    var timeEnd = endTime <= NodaConstants.TicksPerStandardDay ? endTime : endTime - NodaConstants.TicksPerStandardDay;
 
-                    result = new DayAndTime();
-                    result.DayOfWeek = leftSide.DayOfWeek;
-                    result.TimeStart = startTime;
-                    result.TimeEnd = endTime <= NodaConstants.TicksPerStandardDay ? endTime : endTime - NodaConstants.TicksPerStandardDay;
-                    result.IsTentative = rightSide.IsTentative;
+                    result = new DayAndTime(leftSide.DayOfWeek, startTime, timeEnd );
+
                 }
             }
             return result;

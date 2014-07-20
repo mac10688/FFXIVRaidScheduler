@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using RaidScheduler.Entities;
+using RaidScheduler.DTO;
 using RaidScheduler.Data.Migrations;
 
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -79,12 +79,12 @@ namespace RaidScheduler.Data
                 .HasRequired(j => j.Player)
                 .WithMany(p => p.PotentialJobs)
                 .HasForeignKey(p => p.PlayerID);
-                
+
 
             modelBuilder.Entity<PotentialJob>()
-                .HasRequired(j => j.Job)
-                .WithMany(p => p.PotentialJobs)
-                .HasForeignKey(p => p.JobID);
+                .HasRequired(j => j.Job);
+                //.WithMany(p => p.PotentialJobs)
+                //.HasForeignKey(p => p.JobID);
 
             modelBuilder.Entity<RaidCriteria>()
                 .HasRequired(r => r.Raid)
@@ -92,9 +92,9 @@ namespace RaidScheduler.Data
                 .HasForeignKey(r => r.RaidID);
 
             modelBuilder.Entity<RaidRequested>()
-                .HasRequired(r => r.Raid)
-                .WithMany(r => r.RaidRequested)
-                .HasForeignKey(r => r.RaidID);
+                .HasRequired(r => r.Raid);
+                //.WithMany(r => r.RaidRequested)
+                //.HasForeignKey(r => r.RaidID);
 
             modelBuilder.Entity<RaidRequested>()
                 .HasRequired(r => r.Player)
@@ -118,9 +118,9 @@ namespace RaidScheduler.Data
                 .HasForeignKey(s => s.StaticPartyID);
 
             modelBuilder.Entity<StaticParty>()
-                .HasRequired(s => s.Raid)
-                .WithMany(r => r.StaticParty)
-                .HasForeignKey(s => s.RaidID);
+                .HasRequired(s => s.Raid);
+                //.WithMany(r => r.StaticParty)
+                //.HasForeignKey(s => s.RaidID);
 
             modelBuilder.Entity<StaticPartyDayAndTimeSchedule>()
                 .HasRequired(s => s.StaticParty)

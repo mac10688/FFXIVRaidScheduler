@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.WebUI", "Raid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.WebUI.Tests", "RaidScheduler.Tests\RaidScheduler.WebUI.Tests.csproj", "{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.Entities", "RaidScheduler.Entities\RaidScheduler.Entities.csproj", "{BFFA7604-CB66-4C8F-966B-A832D01C6914}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.Data", "RaidScheduler.Data\RaidScheduler.Data.csproj", "{7096559B-5083-4851-9834-2D25A18D49DD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.Domain", "LogicLayer\RaidScheduler.Domain.csproj", "{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaidScheduler.Domain.Tests", "RaidScheduler.Domain.Tests\RaidScheduler.Domain.Tests.csproj", "{189155FD-3454-480C-A782-44F4F5CCC45D}"
@@ -28,14 +24,6 @@ Global
 		{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EC0C8ED-BCC0-4338-8129-124C0A9072F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFFA7604-CB66-4C8F-966B-A832D01C6914}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7096559B-5083-4851-9834-2D25A18D49DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7096559B-5083-4851-9834-2D25A18D49DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7096559B-5083-4851-9834-2D25A18D49DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7096559B-5083-4851-9834-2D25A18D49DD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17A7474C-F0AA-48F5-B0DB-78BD05BE70DE}.Release|Any CPU.ActiveCfg = Release|Any CPU

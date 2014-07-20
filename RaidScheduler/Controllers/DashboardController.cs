@@ -4,9 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using RaidScheduler.Data;
-using RaidScheduler.Entities;
-using RaidScheduler.Models;
+using RaidScheduler.Domain;
+using RaidScheduler.Domain.DomainModels;
+using RaidScheduler.Domain.Repositories;
+using RaidScheduler.WebUI.Models;
 
 namespace RaidScheduler.Controllers
 {
@@ -38,7 +39,7 @@ namespace RaidScheduler.Controllers
                 "Job", "Job Portion"
             });
 
-            var potentialJobs = potentialJobRepository.Get().GroupBy(j => j.Job.JobID);
+            var potentialJobs = potentialJobRepository.Get().GroupBy(j => j.Job.JobId);
 
             foreach(var job in potentialJobs)
             {

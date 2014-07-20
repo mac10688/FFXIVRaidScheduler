@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using RaidScheduler.Entities;
+using RaidScheduler.DTO;
 using System.Data.Entity;
 
 namespace RaidScheduler.Data.Repositories

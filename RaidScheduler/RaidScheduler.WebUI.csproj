@@ -1826,14 +1826,6 @@
       <Project>{17a7474c-f0aa-48f5-b0db-78bd05be70de}</Project>
       <Name>RaidScheduler.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RaidScheduler.Data\RaidScheduler.Data.csproj">
-      <Project>{7096559b-5083-4851-9834-2d25a18d49dd}</Project>
-      <Name>RaidScheduler.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RaidScheduler.Entities\RaidScheduler.Entities.csproj">
-      <Project>{bffa7604-cb66-4c8f-966b-a832d01c6914}</Project>
-      <Name>RaidScheduler.Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

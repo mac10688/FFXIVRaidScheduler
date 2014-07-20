@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NodaTime;
 
-namespace RaidScheduler.Entities
+namespace RaidScheduler.DTO
 {
     public class DayAndTime
     {

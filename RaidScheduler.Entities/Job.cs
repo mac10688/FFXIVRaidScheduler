@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaidScheduler.Entities
+namespace RaidScheduler.DTO
 {
     public class Job
     {
@@ -21,17 +21,5 @@ namespace RaidScheduler.Entities
         public bool IsTank { get; set; }
         public bool IsDps { get; set; }
 
-        private ICollection<PotentialJob> _potentialJobs;
-        public virtual ICollection<PotentialJob> PotentialJobs
-        {
-            get
-            {
-                return _potentialJobs ?? (_potentialJobs = new Collection<PotentialJob>());
-            }
-            set
-            {
-                _potentialJobs = value;
-            }
-        }
     }
 }

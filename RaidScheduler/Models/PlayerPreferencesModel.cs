@@ -6,7 +6,7 @@ using System.Web;
 using NodaTime;
 using System.ComponentModel.DataAnnotations;
 
-namespace RaidScheduler.Models
+namespace RaidScheduler.WebUI.Models
 {
     public class PlayerPreferencesModel
     {

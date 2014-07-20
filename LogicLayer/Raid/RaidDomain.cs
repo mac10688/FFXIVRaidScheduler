@@ -1,4 +1,4 @@
-﻿using RaidScheduler.Entities;
+﻿using RaidScheduler.Domain.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace RaidScheduler.Domain
                         var raidsToRemove = new List<Raid>();
                         foreach (var raid in raidsRequested)
                         {
-                            if (!raids.Any(r => r.RaidID == raid.RaidID))
+                            if (!raids.Any(r => r.RaidId == raid.RaidId))
                             {
                                 raidsToRemove.Add(raid);
                             }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaidScheduler.Entities
+namespace RaidScheduler.DTO
 {
     public class StaticParty
     {

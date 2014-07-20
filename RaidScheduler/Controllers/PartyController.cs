@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using RaidScheduler.Data;
-using RaidScheduler.Models;
-using RaidScheduler.Entities;
 using RaidScheduler.Domain;
+using RaidScheduler.WebUI.Models;
+using RaidScheduler.Domain.DomainModels;
+using RaidScheduler.Domain.Repositories;
 
 using NodaTime;
 using NodaTime.TimeZones;
@@ -86,7 +86,7 @@ namespace RaidScheduler.Controllers
 
             var userID = User.Identity.GetUserId();
             var user = userManager.FindById(userID);
-            var player = playerRepository.Get(p => p.User.Id == user.Id).SingleOrDefault();
+            var player = playerRepository.Get(p => p.UserId == user.Id).SingleOrDefault();
             if(player != null)
             { 
                 var timezoneString = player.TimeZone;
@@ -101,9 +101,9 @@ namespace RaidScheduler.Controllers
                             {
                                 PlayerFirstName = p.Player.FirstName,
                                 PlayerLastName = p.Player.LastName,
-                                ChosenJob = potentialJobRepository.Find(p.ChosenPotentialJobID).Job.JobName
+                                ChosenJob = potentialJobRepository.Find(p.ChosenPotentialJobId).Job.JobName
                             }).ToList(),
-                            RaidName = raidRepository.Find(party.RaidID).RaidName
+                            RaidName = raidRepository.Find(party.RaidId).RaidName
                         };
 
 
