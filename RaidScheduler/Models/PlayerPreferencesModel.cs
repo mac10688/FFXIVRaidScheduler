@@ -63,9 +63,6 @@ namespace RaidScheduler.WebUI.Models
         public long TimeAvailableStart { get; set; }
         [Required]
         public long TimeAvailableEnd { get; set; }
-        [Required]
-        public long TimeDurationLimit { get; set; }
-        public bool IsTentative { get; set; }
     }
 
     public class RaidModel

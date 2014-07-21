@@ -48,7 +48,7 @@
         date.setHours(18);
         date.setMinutes(0);
         date.setSeconds(0);
-        var data = { "Day": "", "TimeAvailableStart": date, "TimeAvailableEnd": date, "TimeDurationLimit": "", "IsTentative": false }
+        var data = { "Day": "", "TimeAvailableStart": date, "TimeAvailableEnd": date}
         self.DaysAndTimesAvailable.push(new DayAndTimeAvailableModel(data));
     };
 
@@ -122,10 +122,6 @@ var DayAndTimeAvailableModel = function (data) {
         var offset = date.getTimezoneOffset() * 60 * 1000;
         self.TimeAvailableEnd = ko.observable(new Date(date.valueOf() + offset));
     }
-
-
-    self.TimeDurationLimit = ko.observable(data.TimeDurationLimit).extend({required: true, number: true});
-    self.IsTentative = ko.observable(data.IsTentative);
 
     DayAndTimeAvailableModel.prototype.toJSON = function () {
         var copy = ko.toJS(this);

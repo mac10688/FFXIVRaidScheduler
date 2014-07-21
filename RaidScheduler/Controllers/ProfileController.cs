@@ -83,8 +83,6 @@ namespace RaidScheduler.Controllers
                             Day = rr.DayAndTime.DayOfWeek.ToString(),
                             TimeAvailableStart = (rr.DayAndTime.TimeStart / NodaConstants.TicksPerMillisecond),
                             TimeAvailableEnd = (rr.DayAndTime.TimeEnd / NodaConstants.TicksPerMillisecond),
-                            TimeDurationLimit = rr.DayAndTime.TimeDurationLimit,
-                            IsTentative = rr.DayAndTime.IsTentative
                         }).ToList();
 
                     model.PlayerPotentialJobs = player.PotentialJobs.Select(pj =>

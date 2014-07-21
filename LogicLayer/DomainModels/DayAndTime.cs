@@ -22,7 +22,5 @@ namespace RaidScheduler.Domain.DomainModels
         public IsoDayOfWeek DayOfWeek { get; protected set; }
         public long TimeStart { get; protected set; }
         public long TimeEnd { get; protected set; }
-        public long TimeDurationLimit { get; protected set; }
-        public bool IsTentative { get; protected set; }
     }
 }
