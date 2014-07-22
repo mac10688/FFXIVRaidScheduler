@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using RaidScheduler.Domain.DomainModels;
 
-namespace RaidScheduler.Domain
+namespace RaidScheduler.Domain.Services
 {
-    public interface IPartyDomain
+    public interface IPartyService
     {
         /// <summary>
         /// Creates a static party from the collection of players given to it.

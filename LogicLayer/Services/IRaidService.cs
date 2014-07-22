@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 using RaidScheduler.Domain.DomainModels;
 
-namespace RaidScheduler.Domain
+namespace RaidScheduler.Domain.Services
 {
-    public interface ISchedulingDomain
+    public interface IRaidService
     {
         /// <summary>
-        /// Given a collection of players, find a collection of contiguous play times.
+        /// Given a collection of players, find the common raids requested.
         /// </summary>
         /// <param name="playerCollection"></param>
         /// <returns></returns>
-        ICollection<DayAndTime> CommonScheduleAmongAllPlayers(ICollection<Player> playerCollection);
+        ICollection<Raid> CommonRaidsRequested(ICollection<Player> playerCollection);
     }
 }

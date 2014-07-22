@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using RaidScheduler.Domain;
+using RaidScheduler.Domain.Services;
 using RaidScheduler.Domain.DomainModels;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace RaidScheduler.Domain.Tests.RaidDomainTest
         [TestMethod]
         public void CommonRaidsRequested_BetweenTwoPlayers_Positive()
         {
-            var domain = new RaidDomain();
+            var domain = new RaidService();
 
             var raid1 = new Raid("Coil Turn 1");
             var raidRequested1 = new RaidRequested(null, raid1, false);
@@ -46,7 +46,7 @@ namespace RaidScheduler.Domain.Tests.RaidDomainTest
         [TestMethod]
         public void CommonRaidsRequested_BetweenTwoPlayers_Negative()
         {
-            var domain = new RaidDomain();
+            var domain = new RaidService();
 
             var raid1 = new Raid("Coil Turn 1");
             var raid2 = new Raid("Coil Trun 2");
@@ -80,7 +80,7 @@ namespace RaidScheduler.Domain.Tests.RaidDomainTest
         [TestMethod]
         public void CommonRaidsRequested_PassInNullCollection()
         {
-            var domain = new RaidDomain();
+            var domain = new RaidService();
             var result = domain.CommonRaidsRequested(null);
             Assert.IsNotNull(result);
         }

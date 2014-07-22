@@ -13,16 +13,16 @@ using MoreLinq;
 
 using Microsoft.AspNet;
 
-namespace RaidScheduler.Domain
+namespace RaidScheduler.Domain.Services
 {
-    public class PartyCombination : IPartyDomain
+    public class PartyCombinationService : IPartyService
     {
         private readonly IRepository<Job> jobRepository;
         private readonly IRepository<Raid> raidRepository;
-        private readonly IRaidDomain raidLogic;
-        private readonly ISchedulingDomain schedulingLogic;
+        private readonly IRaidService raidLogic;
+        private readonly ISchedulingService schedulingLogic;
 
-        public PartyCombination(IRepository<Job> jobRepository, IRepository<Raid> raidRepository, IRaidDomain raidLogic, ISchedulingDomain schedulingLogic)
+        public PartyCombinationService(IRepository<Job> jobRepository, IRepository<Raid> raidRepository, IRaidService raidLogic, ISchedulingService schedulingLogic)
         {
             this.jobRepository = jobRepository;
             this.raidRepository = raidRepository;

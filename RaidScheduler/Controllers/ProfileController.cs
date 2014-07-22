@@ -14,6 +14,7 @@ using RaidScheduler.WebUI.Models;
 using RaidScheduler.Domain.DomainModels;
 using RaidScheduler.Domain.Repositories;
 using RaidScheduler.Domain;
+using RaidScheduler.Domain.Services;
 
 namespace RaidScheduler.Controllers
 {
@@ -26,7 +27,7 @@ namespace RaidScheduler.Controllers
         private readonly IRepository<RaidRequested> raidRequestedRepository;
         private readonly IRepository<PotentialJob> potentialJobRepository;
         private readonly IRepository<PlayerDayAndTimeAvailable> playerDayAndTimeAvailableRepository;
-        private readonly IPartyDomain partyCombination;
+        private readonly IPartyService partyCombination;
         private readonly IRepository<StaticParty> staticPartyRepository;
 
         public ProfileController(
@@ -38,7 +39,7 @@ namespace RaidScheduler.Controllers
             IRepository<PotentialJob> potentialJobRepository,
             IRepository<PlayerDayAndTimeAvailable> playerDayAndTimeAvailableRepository,
             IRepository<StaticParty> staticPartyRepository,
-            IPartyDomain partyCombination
+            IPartyService partyCombination
             )
         {
             this.userManager = userManager;

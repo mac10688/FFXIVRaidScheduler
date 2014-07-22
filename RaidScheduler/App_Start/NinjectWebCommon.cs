@@ -14,7 +14,7 @@ namespace RaidScheduler.App_Start
     using System.Data.Entity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    using RaidScheduler.Domain;
+    using RaidScheduler.Domain.Services;
     using RaidScheduler.Domain.DomainModels;
     using RaidScheduler.Domain.Repositories;
     using Microsoft.AspNet.Identity;
@@ -83,9 +83,9 @@ namespace RaidScheduler.App_Start
             kernel.Bind<IRepository<StaticMember>>().To<StaticPartyMemberRepository>();
             kernel.Bind<IRepository<StaticParty>>().To<StaticPartyRepository>();
 
-            kernel.Bind<IRaidDomain>().To<RaidDomain>();
-            kernel.Bind<IPartyDomain>().To<PartyCombination>();
-            kernel.Bind<ISchedulingDomain>().To<SchedulingDomain>();
+            kernel.Bind<IRaidService>().To<RaidService>();
+            kernel.Bind<IPartyService>().To<PartyCombinationService>();
+            kernel.Bind<ISchedulingService>().To<SchedulingDomain>();
 
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>();
             kernel.Bind<UserManager<User>>().ToSelf();

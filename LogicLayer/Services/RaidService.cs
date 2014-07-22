@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaidScheduler.Domain
+namespace RaidScheduler.Domain.Services
 {
-    public class RaidDomain : IRaidDomain
+    public class RaidService : IRaidService
     {
         /// <summary>
         /// Given a collection of players, find the common raids requested.

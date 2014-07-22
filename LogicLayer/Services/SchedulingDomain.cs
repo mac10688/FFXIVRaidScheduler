@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaidScheduler.Domain
+namespace RaidScheduler.Domain.Services
 {
-    public class SchedulingDomain : ISchedulingDomain
+    public class SchedulingDomain : ISchedulingService
     {
         /// <summary>
         /// Given a collection of players, find a collection of contiguous play times.

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
-using RaidScheduler.Domain;
+using RaidScheduler.Domain.Services;
 using RaidScheduler.Domain.DomainModels;
 using RaidScheduler.Domain.Repositories;
 using System.Collections.Generic;
@@ -34,10 +34,10 @@ namespace RaidScheduler.Domain.Tests.Party
                 });
 
             var raidRepo = new Mock<IRepository<Raid>>();
-            var raidLogic = new Mock<IRaidDomain>();
-            var schedule = new Mock<ISchedulingDomain>();
+            var raidLogic = new Mock<IRaidService>();
+            var schedule = new Mock<ISchedulingService>();
 
-            var partyCombo = new PartyCombination(jobRepo.Object, raidRepo.Object, raidLogic.Object, schedule.Object);
+            var partyCombo = new PartyCombinationService(jobRepo.Object, raidRepo.Object, raidLogic.Object, schedule.Object);
 
             var raidFactory = new RaidFactory();
 
