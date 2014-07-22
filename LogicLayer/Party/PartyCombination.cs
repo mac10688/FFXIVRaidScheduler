@@ -62,7 +62,7 @@ namespace RaidScheduler.Domain
                                 if (staticMembers.Select(m => m.Player).Contains(player))
                                 {
                                     currentParty.SetStaticMembers(staticMembers);
-                                    var times = potentialStaticSchedules.Select(p => new StaticPartyDayAndTimeSchedule { DayAndTime = p}).ToList();
+                                    var times = potentialStaticSchedules.Select(p => new StaticPartyDayAndTimeSchedule(p, null)).ToList();
                                     currentParty.SetScheduledTimes(times);
 
                                     raidPlayerCollection.Remove(player);
