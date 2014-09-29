@@ -7,6 +7,7 @@ using RaidScheduler.Domain.DomainModels;
 using RaidScheduler.Domain.Data;
 using System.Data.Entity;
 using System.Linq.Expressions;
+using RaidScheduler.Domain.DomainModels.PlayerDomain;
 
 namespace RaidScheduler.Domain.Repositories
 {
@@ -18,9 +19,9 @@ namespace RaidScheduler.Domain.Repositories
             this.context = context;
         }
 
-        public Player Find(int ID)
+        public Player Find(string Id)
         {
-            return context.Player.Where(p => p.PlayerId == ID).SingleOrDefault();
+            return context.Player.Find(Id);
         }
 
         public ICollection<Player> Get(Expression<Func<Player, bool>> where = null)
@@ -39,11 +40,12 @@ namespace RaidScheduler.Domain.Repositories
 
         }
 
-        public Player Save(Player entity)
+        public Player Save(Player player)
         {
-            context.Entry<Player>(entity).State = entity.PlayerId == 0? EntityState.Added : EntityState.Modified;
+            var cPlayer = context.Player.Where(p => p.PlayerId == player.PlayerId).SingleOrDefault();
+            context.Entry<Player>(player).State = cPlayer == null ? EntityState.Added : EntityState.Modified;
             context.SaveChanges();
-            return entity;
+            return player;
         }
 
         public void Delete(Player entity)

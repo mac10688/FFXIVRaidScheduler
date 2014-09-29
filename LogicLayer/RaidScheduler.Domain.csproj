@@ -62,102 +62,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DomainModels\DayAndTime.cs" />
-    <Compile Include="DomainModels\Job.cs" />
-    <Compile Include="DomainModels\Player.cs" />
-    <Compile Include="DomainModels\PlayerDayAndTimeAvailable.cs" />
-    <Compile Include="DomainModels\PotentialJob.cs" />
-    <Compile Include="DomainModels\Raid.cs" />
-    <Compile Include="DomainModels\RaidCriteria.cs" />
-    <Compile Include="DomainModels\RaidRequested.cs" />
-    <Compile Include="DomainModels\StaticMember.cs" />
-    <Compile Include="DomainModels\StaticParty.cs" />
-    <Compile Include="DomainModels\StaticPartyDayAndTimeSchedule.cs" />
-    <Compile Include="DomainModels\User.cs" />
-    <Compile Include="Helper\JobFactory.cs" />
-    <Compile Include="Helper\RaidFactory.cs" />
-    <Compile Include="Migrations\201407201647289_Creating rich domain model and moving all IDs to Id.cs" />
-    <Compile Include="Migrations\201407201647289_Creating rich domain model and moving all IDs to Id.Designer.cs">
-      <DependentUpon>201407201647289_Creating rich domain model and moving all IDs to Id.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201407201811017_Changed the player entity.cs" />
-    <Compile Include="Migrations\201407201811017_Changed the player entity.Designer.cs">
-      <DependentUpon>201407201811017_Changed the player entity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201407202105290_Seperating the player object from the User object.cs" />
-    <Compile Include="Migrations\201407202105290_Seperating the player object from the User object.Designer.cs">
-      <DependentUpon>201407202105290_Seperating the player object from the User object.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201407202129136_Took the player reference out of the UserObject.cs" />
-    <Compile Include="Migrations\201407202129136_Took the player reference out of the UserObject.Designer.cs">
-      <DependentUpon>201407202129136_Took the player reference out of the UserObject.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201407202200337_Taking Guids out of the model because of entity framework.cs" />
-    <Compile Include="Migrations\201407202200337_Taking Guids out of the model because of entity framework.Designer.cs">
-      <DependentUpon>201407202200337_Taking Guids out of the model because of entity framework.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201407202250117_Removing player reference from potential jobs.cs" />
-    <Compile Include="Migrations\201407202250117_Removing player reference from potential jobs.Designer.cs">
-      <DependentUpon>201407202250117_Removing player reference from potential jobs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201407210158236_Removing player istentative and time duration field..cs" />
-    <Compile Include="Migrations\201407210158236_Removing player istentative and time duration field..Designer.cs">
-      <DependentUpon>201407210158236_Removing player istentative and time duration field..cs</DependentUpon>
+    <Compile Include="DomainModels\JobDomain\IJobFactory.cs" />
+    <Compile Include="DomainModels\RaidDomain\RaidTypes.cs" />
+    <Compile Include="DomainServices\PartyMaker\Combinatorics\Combinations.cs" />
+    <Compile Include="DomainServices\PartyMaker\Combinatorics\GenerateOption.cs" />
+    <Compile Include="DomainServices\PartyMaker\Combinatorics\IMetaCollection.cs" />
+    <Compile Include="DomainServices\PartyMaker\Combinatorics\Permutations.cs" />
+    <Compile Include="DomainServices\PartyMaker\Combinatorics\SmallPrimeUtility.cs" />
+    <Compile Include="DomainServices\PartyMaker\Combinatorics\Variations.cs" />
+    <Compile Include="DomainModels\RaidDomain\IRaidFactory.cs" />
+    <Compile Include="DomainModels\RaidDomain\RaidCriterium.cs" />
+    <Compile Include="DomainModels\SharedValueObject\DayAndTime.cs" />
+    <Compile Include="DomainModels\JobDomain\Job.cs" />
+    <Compile Include="DomainModels\JobDomain\JobAttributes.cs" />
+    <Compile Include="DomainModels\JobDomain\JobTypes.cs" />
+    <Compile Include="DomainModels\PlayerDomain\Player.cs" />
+    <Compile Include="DomainModels\PlayerDomain\PlayerDayAndTimeAvailable.cs" />
+    <Compile Include="DomainModels\PlayerDomain\PotentialJob.cs" />
+    <Compile Include="DomainModels\RaidDomain\Raid.cs" />
+    <Compile Include="DomainModels\RaidDomain\RaidCriteria.cs" />
+    <Compile Include="DomainModels\PlayerDomain\RaidRequested.cs" />
+    <Compile Include="DomainModels\StaticPartyDomain\StaticMember.cs" />
+    <Compile Include="DomainModels\StaticPartyDomain\StaticParty.cs" />
+    <Compile Include="DomainModels\StaticPartyDomain\StaticPartyDayAndTimeSchedule.cs" />
+    <Compile Include="DomainModels\UserDomain\User.cs" />
+    <Compile Include="DomainModels\JobDomain\JobFactory.cs" />
+    <Compile Include="DomainModels\RaidDomain\RaidFactory.cs" />
+    <Compile Include="Migrations\201409281933238_InitialCreate.cs" />
+    <Compile Include="Migrations\201409281933238_InitialCreate.Designer.cs">
+      <DependentUpon>201409281933238_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Migrations\201405082225555_Initial Create.cs" />
-    <Compile Include="Migrations\201405082225555_Initial Create.Designer.cs">
-      <DependentUpon>201405082225555_Initial Create.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Services\IPartyService.cs" />
-    <Compile Include="Services\PartyCombinationService.cs" />
+    <Compile Include="DomainServices\PartyMaker\IJobCombination.cs" />
+    <Compile Include="DomainServices\PartyMaker\IPartyService.cs" />
+    <Compile Include="DomainServices\PartyMaker\JobCombination.cs" />
+    <Compile Include="DomainServices\PartyMaker\PartyCombination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RaidSchedulerContext.cs" />
-    <Compile Include="Services\IRaidService.cs" />
-    <Compile Include="Services\RaidService.cs" />
-    <Compile Include="Repositories\DayAndTimeAvailableRepository.cs" />
+    <Compile Include="Contexts\RaidSchedulerContext.cs" />
     <Compile Include="Repositories\JobRepository.cs" />
-    <Compile Include="Repositories\PlayerPotentialJobRepository.cs" />
     <Compile Include="Repositories\PlayerRepository.cs" />
-    <Compile Include="Repositories\RaidCriteriaRepository.cs" />
     <Compile Include="Repositories\RaidRepository.cs" />
-    <Compile Include="Repositories\RaidRequestedRepository.cs" />
-    <Compile Include="Repositories\StaticPartyDayAndTimeScheduleRepository.cs" />
-    <Compile Include="Repositories\StaticPartyMemberRepository.cs" />
     <Compile Include="Repositories\StaticPartyRepository.cs" />
-    <Compile Include="Services\ISchedulingServices.cs" />
-    <Compile Include="Services\SchedulingDomain.cs" />
+    <Compile Include="DomainServices\PartyMaker\IScheduling.cs" />
+    <Compile Include="DomainServices\PartyMaker\SchedulingDomain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201405082225555_Initial Create.resx">
-      <DependentUpon>201405082225555_Initial Create.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407201647289_Creating rich domain model and moving all IDs to Id.resx">
-      <DependentUpon>201407201647289_Creating rich domain model and moving all IDs to Id.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407201811017_Changed the player entity.resx">
-      <DependentUpon>201407201811017_Changed the player entity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407202105290_Seperating the player object from the User object.resx">
-      <DependentUpon>201407202105290_Seperating the player object from the User object.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407202129136_Took the player reference out of the UserObject.resx">
-      <DependentUpon>201407202129136_Took the player reference out of the UserObject.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407202200337_Taking Guids out of the model because of entity framework.resx">
-      <DependentUpon>201407202200337_Taking Guids out of the model because of entity framework.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407202250117_Removing player reference from potential jobs.resx">
-      <DependentUpon>201407202250117_Removing player reference from potential jobs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201407210158236_Removing player istentative and time duration field..resx">
-      <DependentUpon>201407210158236_Removing player istentative and time duration field..cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201409281933238_InitialCreate.resx">
+      <DependentUpon>201409281933238_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

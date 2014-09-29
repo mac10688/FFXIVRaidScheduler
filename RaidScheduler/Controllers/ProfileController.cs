@@ -15,42 +15,40 @@ using RaidScheduler.Domain.DomainModels;
 using RaidScheduler.Domain.Repositories;
 using RaidScheduler.Domain;
 using RaidScheduler.Domain.Services;
+using RaidScheduler.Domain.DomainModels.RaidDomain;
+using RaidScheduler.Domain.DomainModels.JobDomain;
+using RaidScheduler.Domain.DomainModels.UserDomain;
+using RaidScheduler.Domain.DomainModels.PlayerDomain;
+using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
+using RaidScheduler.Domain.DomainModels.SharedValueObject;
 
 namespace RaidScheduler.Controllers
 {
     public class ProfileController : Controller
     {
-        private UserManager<User> userManager;
-        private readonly IRepository<Player> playerRepository;
-        private readonly IRepository<Raid> raidRepository;
-        private readonly IRepository<Job> jobRepository;
-        private readonly IRepository<RaidRequested> raidRequestedRepository;
-        private readonly IRepository<PotentialJob> potentialJobRepository;
-        private readonly IRepository<PlayerDayAndTimeAvailable> playerDayAndTimeAvailableRepository;
-        private readonly IPartyService partyCombination;
-        private readonly IRepository<StaticParty> staticPartyRepository;
+        private UserManager<User> _userManager;
+        private readonly IRepository<Player> _playerRepository;
+        private readonly IRepository<StaticParty> _staticPartyRepository;
+        private readonly IJobFactory _jobFactory;
+        private readonly IRaidFactory _raidFactory;        
+        private readonly IPartyService _partyCombination;
+        
 
         public ProfileController(
             UserManager<User> userManager,
             IRepository<Player> playerRepository,
-            IRepository<Raid> raidRepository,
-            IRepository<Job> jobRepository,
-            IRepository<RaidRequested> raidRequestedRepository,
-            IRepository<PotentialJob> potentialJobRepository,
-            IRepository<PlayerDayAndTimeAvailable> playerDayAndTimeAvailableRepository,
+            IRaidFactory raidFactory,
+            IJobFactory jobFactory,
             IRepository<StaticParty> staticPartyRepository,
             IPartyService partyCombination
             )
         {
-            this.userManager = userManager;
-            this.playerRepository = playerRepository;
-            this.raidRepository = raidRepository;
-            this.jobRepository = jobRepository;
-            this.raidRequestedRepository = raidRequestedRepository;
-            this.potentialJobRepository = potentialJobRepository;
-            this.playerDayAndTimeAvailableRepository = playerDayAndTimeAvailableRepository;
-            this.partyCombination = partyCombination;
-            this.staticPartyRepository = staticPartyRepository;
+            _userManager = userManager;
+            _playerRepository = playerRepository;
+            _raidFactory = raidFactory;
+            _jobFactory = jobFactory;
+            _partyCombination = partyCombination;
+            _staticPartyRepository = staticPartyRepository;
         }
 
         /// <summary>
@@ -61,9 +59,9 @@ namespace RaidScheduler.Controllers
         {
             PlayerPreferencesModel model = new PlayerPreferencesModel();
 
-            var user = userManager.FindById(User.Identity.GetUserId());
-            var player = playerRepository.Get((p) => p.UserId == user.Id).SingleOrDefault();
-            BclDateTimeZoneSource timezoneSource = new BclDateTimeZoneSource();
+            var user = _userManager.FindById(User.Identity.GetUserId());
+            var player = _playerRepository.Get((p) => p.UserId == user.Id).SingleOrDefault();
+            var timezoneSource = new BclDateTimeZoneSource();
             model.TimeZoneList = timezoneSource.GetIds().OrderBy(tz => tz).ToList();
             if(player != null)
             { 
@@ -71,7 +69,7 @@ namespace RaidScheduler.Controllers
                 model.LastName = player.LastName;
                 model.SelectedTimeZone = player.TimeZone;
 
-                model.RaidsRequested = player.RaidsRequested.Select(rr => rr.Raid.RaidName).ToList();
+                model.RaidsRequested = player.RaidsRequested.Select(rr => _raidFactory.CreateRaid(rr.RaidType).RaidName).ToList();
 
                 if (player.TimeZone != null)
                 {
@@ -89,21 +87,21 @@ namespace RaidScheduler.Controllers
                     model.PlayerPotentialJobs = player.PotentialJobs.Select(pj =>
                         new PlayerPotentialJobModel
                         {
-                            PotentialJobID = pj.Job.JobId,
+                            PotentialJobID = pj.PotentialJobId,
                             ILvl = pj.ILvl,
                             ComfortLevel = pj.ComfortLevel
                         }).ToList();
                 }
             }            
 
-            model.PotentialJobsToChoose = jobRepository.Get().Select(j =>
+            model.PotentialJobsToChoose = _jobFactory.GetAllJobs().Select(j =>
                 new JobModel
                 {
                     JobID = j.JobId,
                     JobName = j.JobName
                 }).ToList();
 
-            model.RaidsAvailable = raidRepository.Get().Select(r => r.RaidName).ToList();
+            model.RaidsAvailable = _raidFactory.GetAllRaids().Select(r => r.RaidName).ToList();
             model.DaysToChoose = Enum.GetNames(typeof(IsoDayOfWeek)).Where(n => n != "None").ToList();
 
             return View(model);
@@ -125,62 +123,45 @@ namespace RaidScheduler.Controllers
                 }
 
                 var currentUserId = User.Identity.GetUserId();
-                var playerUser = userManager.FindById(currentUserId);
-                var player = playerRepository.Get(p => p.UserId == playerUser.Id).SingleOrDefault();
+                var playerUser = _userManager.FindById(currentUserId);
+                var player = _playerRepository.Get(p => p.UserId == playerUser.Id).SingleOrDefault();
                 if(player == null)
                 {
-                    player = new Player(playerUser.Id);
+                    player = new Player(playerUser.Id, playerPreferences.FirstName, playerPreferences.LastName, playerPreferences.SelectedTimeZone);
                 }
 
-                player.FirstName = playerPreferences.FirstName;
-                player.LastName = playerPreferences.LastName;
-                player.TimeZone = playerPreferences.SelectedTimeZone;
+                //var raidsRequested = player.RaidsRequested.ToList();
 
-                var raidsRequested = player.RaidsRequested.ToList();
+                //player.RaidsRequested.ToList().ForEach(r =>
+                //{
+                //    player.RaidsRequested.Remove(r);
+                //    _raidRequestedRepository.Delete(r);                    
+                //});
 
-                player.RaidsRequested.ToList().ForEach(r =>
+                var allRaidsPossible = _raidFactory.GetAllRaids().ToList();
+                var raidsRequested = new List<RaidRequested>();
+                foreach(var modelRaidRequested in playerPreferences.RaidsRequested)
                 {
-                    player.RaidsRequested.Remove(r);
-                    raidRequestedRepository.Delete(r);
-                    
-                });
+                    var raidType = allRaidsPossible.Where(r => modelRaidRequested == r.RaidName).Single().RaidType;
+                    var raidRequested = new RaidRequested(raidType, false);
+                    raidsRequested.Add(raidRequested);
+                }
+                player.SetRaidsRequested(raidsRequested);
 
+                var allJobsPossible = _jobFactory.GetAllJobs();
+                var allPotentialJobs = new List<PotentialJob>();
+                foreach(var modelPotentialJob in playerPreferences.PlayerPotentialJobs)
+                {
+                    var jobType = allJobsPossible.Where(j => modelPotentialJob.PotentialJobID == j.JobId).Single().JobType;
+                    var potentialJob = new PotentialJob(modelPotentialJob.ILvl, modelPotentialJob.ComfortLevel, jobType);
+                    allPotentialJobs.Add(potentialJob);
+                }
 
-                playerPreferences.RaidsRequested.Select(rr =>
-                    new RaidRequested(
-                        player,
-                        raidRepository.Get(r => r.RaidName == rr).Single(), 
-                        false))
-                    .ToList()
-                    .ForEach(r =>
-                    {
-                        player.RaidsRequested.Add(r);
-                    });
+                player.SetPotentialJobs(allPotentialJobs);
 
-                player.PotentialJobs.ToList().ForEach(p =>
-                    {
-                        player.PotentialJobs.Remove(p);
-                        potentialJobRepository.Delete(p);
-                    });
-
-                playerPreferences.PlayerPotentialJobs.Select(ppj =>
-                    new PotentialJob(ppj.ILvl, ppj.ComfortLevel, jobRepository.Find(ppj.PotentialJobID)))
-                    .ToList()
-                    .ForEach(p =>
-                    {
-                        player.PotentialJobs.Add(p);
-
-                    });
-
-                player.DaysAndTimesAvailable.ToList().ForEach(d =>
-                    {
-                        player.DaysAndTimesAvailable.Remove(d);
-                        playerDayAndTimeAvailableRepository.Delete(d);
-                    });
+                var timeAvailable = new List<PlayerDayAndTimeAvailable>();
                 foreach (var d in playerPreferences.DaysAndTimesAvailable)
                 {
-                    
-
                     DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
                     LocalDateTime timeAvailableStart = LocalDateTime.FromDateTime(epoch.AddMilliseconds(d.TimeAvailableStart));
@@ -195,34 +176,30 @@ namespace RaidScheduler.Controllers
 
                     var availableDayaAndTime = new PlayerDayAndTimeAvailable(dayAndTime);
 
-                    player.DaysAndTimesAvailable.Add(availableDayaAndTime);
+                    timeAvailable.Add(availableDayaAndTime);
                 }
+                player.SetDaysAndTimesAvailable(timeAvailable);
 
-                playerRepository.Save(player);
+                _playerRepository.Save(player);
 
-                //Thread thread = new Thread(() =>
-                //{
-                var oldParty = staticPartyRepository.Get();
+                var oldParty = _staticPartyRepository.Get();
                 oldParty.ToList().ForEach(p =>
                 {
-                    staticPartyRepository.Delete(p);
+                    _staticPartyRepository.Delete(p);
                 });
 
-                var players = playerRepository.Get().ToList();
+                var players = _playerRepository.Get().ToList();
 
-                var staticParties = partyCombination.CreateStaticPartiesFromPlayers(players);
+                var staticParties = _partyCombination.CreateStaticPartiesFromPlayers(players);
                     
                 foreach (var party in staticParties)
                 {
-                    staticPartyRepository.Save(party);
+                    _staticPartyRepository.Save(party);
                 }
-                //});
-                //thread.IsBackground = true;
-                //thread.Start();
 
                 return Json(new { Message = "success", PlayerID = player.PlayerId });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Json(new { Message = "fail" });
             }

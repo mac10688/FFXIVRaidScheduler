@@ -6,9 +6,10 @@ namespace RaidScheduler.Domain.Migrations
     using System.Linq;
 
     using RaidScheduler.Domain.DomainModels;
-    using RaidScheduler.Domain.Helper;
     using System.Collections.Generic;
     using RaidScheduler.Domain.Data;
+    using RaidScheduler.Domain.DomainModels.JobDomain;
+    using RaidScheduler.Domain.DomainModels.RaidDomain;
 
     internal sealed class Configuration : DbMigrationsConfiguration<RaidSchedulerContext>
     {
@@ -32,31 +33,31 @@ namespace RaidScheduler.Domain.Migrations
             //  new Person { FullName = "Rowan Miller" }
             //);
 
-            var jobFactory = new JobFactory();
+            //var jobFactory = new JobFactory();
 
-            context.Jobs.AddOrUpdate(j => j.JobName,
-                    jobFactory.CreateJob(JobType.Paladin),
-                    jobFactory.CreateJob(JobType.Warrior),
-                    jobFactory.CreateJob(JobType.WhiteMage),
-                    jobFactory.CreateJob(JobType.Scholar),
-                    jobFactory.CreateJob(JobType.Summoner),
-                    jobFactory.CreateJob(JobType.Dragoon),
-                    jobFactory.CreateJob(JobType.Monk),
-                    jobFactory.CreateJob(JobType.BlackMage)
-                );
+            //context.Jobs.AddOrUpdate(j => j.JobName,
+            //        jobFactory.CreateJob(JobTypes.Paladin),
+            //        jobFactory.CreateJob(JobTypes.Warrior),
+            //        jobFactory.CreateJob(JobTypes.WhiteMage),
+            //        jobFactory.CreateJob(JobTypes.Scholar),
+            //        jobFactory.CreateJob(JobTypes.Summoner),
+            //        jobFactory.CreateJob(JobTypes.Dragoon),
+            //        jobFactory.CreateJob(JobTypes.Monk),
+            //        jobFactory.CreateJob(JobTypes.BlackMage)
+            //    );
 
-            var raidFactory = new RaidFactory();
+            //var raidFactory = new RaidFactory();
 
-            context.Raids.AddOrUpdate(r => r.RaidName,
-                raidFactory.CreateRaid(RaidType.CoilTurn1),
-                raidFactory.CreateRaid(RaidType.CoilTurn2),
-                raidFactory.CreateRaid(RaidType.CoilTurn3),
-                raidFactory.CreateRaid(RaidType.CoilTurn4),
-                raidFactory.CreateRaid(RaidType.CoilTurn5),
-                raidFactory.CreateRaid(RaidType.GarudaExtreme),
-                raidFactory.CreateRaid(RaidType.TitanExtreme),
-                raidFactory.CreateRaid(RaidType.IfritExtreme)
-                );
+            //context.Raids.AddOrUpdate<Raid>(r => r.RaidName,
+            //    raidFactory.CreateRaid(RaidType.CoilTurn1),
+            //    raidFactory.CreateRaid(RaidType.CoilTurn2),
+            //    raidFactory.CreateRaid(RaidType.CoilTurn3),
+            //    raidFactory.CreateRaid(RaidType.CoilTurn4),
+            //    raidFactory.CreateRaid(RaidType.CoilTurn5),
+            //    raidFactory.CreateRaid(RaidType.GarudaExtreme),
+            //    raidFactory.CreateRaid(RaidType.TitanExtreme),
+            //    raidFactory.CreateRaid(RaidType.IfritExtreme)
+            //    );
 
         }
     }

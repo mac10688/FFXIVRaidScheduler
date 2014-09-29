@@ -8,16 +8,20 @@ using RaidScheduler.Domain;
 using RaidScheduler.Domain.DomainModels;
 using RaidScheduler.Domain.Repositories;
 using RaidScheduler.WebUI.Models;
+using RaidScheduler.Domain.DomainModels.PlayerDomain;
+using RaidScheduler.Domain.DomainModels.JobDomain;
 
 namespace RaidScheduler.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly IRepository<PotentialJob> potentialJobRepository;
+        private readonly IRepository<Player> _playerRepository;
+        private readonly IJobFactory _jobFactory;
 
-        public DashboardController(IRepository<PotentialJob> potentialJobRepository)
+        public DashboardController(IRepository<Player> playerRepository, IJobFactory jobFactory)
         {
-            this.potentialJobRepository = potentialJobRepository;
+            _playerRepository = playerRepository;
+            _jobFactory = jobFactory;
         }
         
         //
@@ -39,13 +43,16 @@ namespace RaidScheduler.Controllers
                 "Job", "Job Portion"
             });
 
-            var potentialJobs = potentialJobRepository.Get().GroupBy(j => j.Job.JobId);
+            var jobs = _jobFactory.GetAllJobs();
+
+            var potentialJobs = _playerRepository.Get().SelectMany(p => p.PotentialJobs).GroupBy(p => p.JobId);
 
             foreach(var job in potentialJobs)
             {
+                var jobType = job.First().JobId;
                 jobAndCountModel.JobAndCountModel.Add(new object[2]
                     {                        
-                        job.First().Job.JobName,
+                        jobs.Where(j => j.JobType == jobType).Single().JobName,
                         job.Count()            
                     });
             }

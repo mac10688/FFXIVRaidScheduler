@@ -13,39 +13,38 @@ using NodaTime;
 using NodaTime.TimeZones;
 using System.Configuration;
 using Microsoft.AspNet.Identity;
+using RaidScheduler.Domain.DomainModels.RaidDomain;
+using RaidScheduler.Domain.DomainModels.JobDomain;
+using RaidScheduler.Domain.DomainModels.UserDomain;
+using RaidScheduler.Domain.DomainModels.PlayerDomain;
+using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
 
 namespace RaidScheduler.Controllers
 {
     [Authorize]
     public class PartyController : Controller
     {
-        private readonly IRepository<Player> playerRepository;
-        private readonly IRepository<Raid> raidRepository;
-        private readonly IRepository<Job> jobRepository;
-        private readonly IRepository<PlayerDayAndTimeAvailable> dayAndTimeAvailableRepository;
-        private readonly IRepository<StaticParty> staticPartyRepository;
-        private readonly IRepository<PotentialJob> potentialJobRepository;
-        private readonly UserManager<User> userManager;
+        private readonly IRepository<Player> _playerRepository;
+        private readonly IRaidFactory _raidFactory;
+        private readonly IJobFactory _jobFactory;
+        private readonly IRepository<StaticParty> _staticPartyRepository;
+        private readonly UserManager<User> _userManager;
         //private readonly PartyCombination partyCombination;
         
 
         public PartyController(
             UserManager<User> userManager,
             IRepository<Player> playerRepository,
-            IRepository<Raid> raidRepository,
-            IRepository<Job> jobRepository,
-            IRepository<PlayerDayAndTimeAvailable> dayAndTimeAvailableRepository,
-            IRepository<StaticParty> staticPartyRepository,
-            IRepository<PotentialJob> potentialJobRepository
+            IRaidFactory raidFactory,
+            IJobFactory jobFactory,
+            IRepository<StaticParty> staticPartyRepository
             )
         {
-            this.playerRepository = playerRepository;
-            this.raidRepository = raidRepository;
-            this.jobRepository = jobRepository;
-            this.dayAndTimeAvailableRepository = dayAndTimeAvailableRepository;
-            this.userManager = userManager;
-            this.staticPartyRepository = staticPartyRepository;
-            this.potentialJobRepository = potentialJobRepository;
+            this._playerRepository = playerRepository;
+            this._raidFactory = raidFactory;
+            this._jobFactory = jobFactory;
+            this._userManager = userManager;
+            this._staticPartyRepository = staticPartyRepository;
         }
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace RaidScheduler.Controllers
             PlayerChoiceModel modelCollection = new PlayerChoiceModel();
             try
             {
-                var playerCollection = playerRepository.Get();
+                var playerCollection = _playerRepository.Get();
                 foreach (var player in playerCollection)
                 {
                     PlayerModel playerModel = new PlayerModel();
@@ -85,25 +84,25 @@ namespace RaidScheduler.Controllers
             PlayerCombinationsModel model = new PlayerCombinationsModel();
 
             var userID = User.Identity.GetUserId();
-            var user = userManager.FindById(userID);
-            var player = playerRepository.Get(p => p.UserId == user.Id).SingleOrDefault();
+            var user = _userManager.FindById(userID);
+            var player = _playerRepository.Get(p => p.UserId == user.Id).SingleOrDefault();
             if(player != null)
             { 
                 var timezoneString = player.TimeZone;
                 var timezone = NodaTime.DateTimeZoneProviders.Bcl.GetZoneOrNull(timezoneString);
                 var offset = timezone.GetUtcOffset(SystemClock.Instance.Now);
-                var staticParties = staticPartyRepository.Get();
+                var staticParties = _staticPartyRepository.Get();
                 foreach (var party in staticParties)
                 {
                     var partyModel = new PartyModel
                         {
                             PartyCombination = party.StaticMembers.Select(p => new DisplayPlayerModel
                             {
-                                PlayerFirstName = p.Player.FirstName,
-                                PlayerLastName = p.Player.LastName,
-                                ChosenJob = potentialJobRepository.Find(p.ChosenPotentialJobId).Job.JobName
+                                PlayerFirstName = _playerRepository.Find(p.PlayerId).FirstName,
+                                PlayerLastName = _playerRepository.Find(p.PlayerId).LastName,
+                                ChosenJob = _jobFactory.CreateJob(p.ChosenJob).JobName
                             }).ToList(),
-                            RaidName = raidRepository.Find(party.RaidId).RaidName
+                            RaidName = _raidFactory.CreateRaid(party.RaidType).RaidName
                         };
 
 

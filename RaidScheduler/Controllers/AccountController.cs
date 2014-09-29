@@ -15,6 +15,7 @@ using RaidScheduler.Domain.DomainModels;
 using NodaTime;
 using RaidScheduler.Domain;
 using NodaTime.TimeZones;
+using RaidScheduler.Domain.DomainModels.UserDomain;
 
 namespace RaidScheduler.Controllers
 {

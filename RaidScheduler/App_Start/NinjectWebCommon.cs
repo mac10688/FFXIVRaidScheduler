@@ -19,6 +19,11 @@ namespace RaidScheduler.App_Start
     using RaidScheduler.Domain.Repositories;
     using Microsoft.AspNet.Identity;
     using RaidScheduler.Domain.Data;
+    using RaidScheduler.Domain.DomainModels.JobDomain;
+    using RaidScheduler.Domain.DomainModels.RaidDomain;
+    using RaidScheduler.Domain.DomainModels.PlayerDomain;
+    using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
+    using RaidScheduler.Domain.DomainModels.UserDomain;
 
     public static class NinjectWebCommon 
     {
@@ -72,23 +77,17 @@ namespace RaidScheduler.App_Start
         {
             kernel.Bind<RaidSchedulerContext, DbContext, IdentityDbContext<User>>().To<RaidSchedulerContext>().InRequestScope().WithConstructorArgument("connectionString", System.Configuration.ConfigurationManager.ConnectionStrings["RaidSchedulerContext"].ToString());
 
-            kernel.Bind<IRepository<Job>>().To<JobRepository>();
-            kernel.Bind<IRepository<Player>>().To<PlayerRepository>();
-            kernel.Bind<IRepository<PlayerDayAndTimeAvailable>>().To<PlayerDayAndTimeAvailableRepository>();
-            kernel.Bind<IRepository<PotentialJob>>().To<PlayerPotentialJobRepository>();
-            kernel.Bind<IRepository<Raid>>().To<RaidRepository>();
-            kernel.Bind<IRepository<RaidCriteria>>().To<RaidCriteriaRepository>();
-            kernel.Bind<IRepository<RaidRequested>>().To<RaidRequestedRepository>();
-            kernel.Bind<IRepository<StaticPartyDayAndTimeSchedule>>().To<StaticPartyDayAndTimeScheduleRepository>();
-            kernel.Bind<IRepository<StaticMember>>().To<StaticPartyMemberRepository>();
+            kernel.Bind<IRepository<Player>>().To<PlayerRepository>();                      
             kernel.Bind<IRepository<StaticParty>>().To<StaticPartyRepository>();
+            kernel.Bind<IRaidFactory>().To<RaidFactory>();
+            kernel.Bind<IJobFactory>().To<JobFactory>();
 
-            kernel.Bind<IRaidService>().To<RaidService>();
             kernel.Bind<IPartyService>().To<PartyCombinationService>();
-            kernel.Bind<ISchedulingService>().To<SchedulingDomain>();
+            kernel.Bind<ISchedulingDomainService>().To<SchedulingDomain>();
+            kernel.Bind<IJobCombination>().To<JobCombination>();
 
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>();
             kernel.Bind<UserManager<User>>().ToSelf();
-        }        
+        }
     }
 }

@@ -8,6 +8,7 @@ using RaidScheduler.Domain.DomainModels;
 
 using System.Data.Entity;
 using RaidScheduler.Domain.Data;
+using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
 
 namespace RaidScheduler.Domain.Repositories
 {
@@ -21,7 +22,7 @@ namespace RaidScheduler.Domain.Repositories
 
         public StaticParty Save(StaticParty entity)
         {
-            context.Entry<StaticParty>(entity).State = entity.StaticPartyId == 0 ? EntityState.Added : EntityState.Modified;
+            context.Entry<StaticParty>(entity).State = entity.StaticPartyId == null ? EntityState.Added : EntityState.Modified;
             context.SaveChanges();
             return entity;
         }
@@ -32,7 +33,7 @@ namespace RaidScheduler.Domain.Repositories
             context.SaveChanges();
         }
 
-        public StaticParty Find(int ID)
+        public StaticParty Find(string ID)
         {
             var result = context.StaticParties.Find(ID);
             return result;
