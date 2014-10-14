@@ -9,7 +9,7 @@ using RaidScheduler.Domain.Services;
 using RaidScheduler.Domain.DomainModels.SharedValueObject;
 using RaidScheduler.Domain.DomainModels.PlayerDomain;
 
-namespace RaidScheduler.Domain.Tests.Services
+namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
 {
     [TestClass]
     public class SchedulingDomainTests
@@ -21,19 +21,19 @@ namespace RaidScheduler.Domain.Tests.Services
         [TestMethod]
         public void TwoPlayers_With_SameTimeAndTimezone()
         {
-            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1", CentralStandardTime);
+            
             var player1StartTime = new LocalDateTime(2014,9,16,11,0,0);
             var player1EndTime = new LocalDateTime(2014,9,16,13,0,0);
             var player1DayAndTime = new DayAndTime(IsoDayOfWeek.Monday, player1StartTime.TickOfDay, player1EndTime.TickOfDay);
             var player1DayAndTimeAvailable = new PlayerDayAndTimeAvailable(player1DayAndTime);
+            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1", CentralStandardTime);
             player1.DaysAndTimesAvailable.Add(player1DayAndTimeAvailable);
-
-
-            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2", CentralStandardTime);
+                        
             var player2StartTime = new LocalDateTime(2014, 9, 16, 11, 0, 0);
             var player2EndTime = new LocalDateTime(2014, 9, 16, 13, 0, 0);
             var player2DayAndTime = new DayAndTime(IsoDayOfWeek.Monday, player2StartTime.TickOfDay, player2EndTime.TickOfDay);
             var player2DayAndTimeAvailable = new PlayerDayAndTimeAvailable(player2DayAndTime);
+            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2", CentralStandardTime);
             player2.DaysAndTimesAvailable.Add(player2DayAndTimeAvailable);
 
             var players = new List<Player>() { player1, player2 };

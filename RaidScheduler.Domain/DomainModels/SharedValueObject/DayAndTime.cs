@@ -13,7 +13,9 @@ namespace RaidScheduler.Domain.DomainModels.SharedValueObject
         public DayAndTime(IsoDayOfWeek dayOfWeek, long timeStart, long timeEnd)
         {
             DayOfWeek = dayOfWeek;
+
             TimeStart = timeStart;
+            
             TimeEnd = timeEnd;
         }
 

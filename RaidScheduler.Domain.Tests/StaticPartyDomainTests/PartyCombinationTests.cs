@@ -17,7 +17,7 @@ using RaidScheduler.Domain.DomainModels.PlayerDomain;
 using RaidScheduler.Domain.DomainModels.SharedValueObject;
 using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
 
-namespace RaidScheduler.Domain.Tests.Party
+namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
 {
     [TestClass]
     public class PartyCombinationTests

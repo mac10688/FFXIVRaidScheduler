@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using RaidScheduler.Domain.DomainModels.PlayerDomain;
 
-namespace RaidScheduler.Domain.Tests.Services
+namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
 {
     [TestClass]
     public class JobCombinationTests

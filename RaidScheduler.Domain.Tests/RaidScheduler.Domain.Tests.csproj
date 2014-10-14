@@ -74,10 +74,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Party\PartyCombinationTests.cs" />
+    <Compile Include="StaticPartyDomainTests\PartyCombinationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\JobCombinationTests.cs" />
-    <Compile Include="Services\SchedulingDomainTests.cs" />
+    <Compile Include="StaticPartyDomainTests\JobCombinationTests.cs" />
+    <Compile Include="StaticPartyDomainTests\SchedulingDomainTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RaidScheduler.Domain\RaidScheduler.Domain.csproj">
@@ -86,7 +86,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Schedule\" />
+    <Folder Include="JobDomainTests\" />
+    <Folder Include="Party\" />
+    <Folder Include="PlayerDomainTests\" />
+    <Folder Include="RaidDomainTests\" />
+    <Folder Include="ScheduleTests\" />
+    <Folder Include="ServicesTests\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

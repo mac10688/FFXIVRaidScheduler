@@ -87,7 +87,8 @@ namespace RaidScheduler.Controllers
                     model.PlayerPotentialJobs = player.PotentialJobs.Select(pj =>
                         new PlayerPotentialJobModel
                         {
-                            PotentialJobID = pj.PotentialJobId,
+                            PlayerPotentialJobID = pj.PotentialJobId,
+                            PotentialJobID = (int)pj.JobId,
                             ILvl = pj.ILvl,
                             ComfortLevel = pj.ComfortLevel
                         }).ToList();
@@ -128,6 +129,10 @@ namespace RaidScheduler.Controllers
                 if(player == null)
                 {
                     player = new Player(playerUser.Id, playerPreferences.FirstName, playerPreferences.LastName, playerPreferences.SelectedTimeZone);
+                }
+                else
+                {
+                    player.TimeZone = playerPreferences.SelectedTimeZone;
                 }
 
                 //var raidsRequested = player.RaidsRequested.ToList();

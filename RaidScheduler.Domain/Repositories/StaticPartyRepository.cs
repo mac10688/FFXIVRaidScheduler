@@ -20,11 +20,12 @@ namespace RaidScheduler.Domain.Repositories
             this.context = context;
         }
 
-        public StaticParty Save(StaticParty entity)
+        public StaticParty Save(StaticParty staticParty)
         {
-            context.Entry<StaticParty>(entity).State = entity.StaticPartyId == null ? EntityState.Added : EntityState.Modified;
+            var cParty = context.StaticParties.Where(sp => sp.StaticPartyId == staticParty.StaticPartyId).SingleOrDefault();
+            context.Entry<StaticParty>(staticParty).State = cParty == null ? EntityState.Added : EntityState.Modified;
             context.SaveChanges();
-            return entity;
+            return staticParty;
         }
 
         public void Delete(StaticParty entity)

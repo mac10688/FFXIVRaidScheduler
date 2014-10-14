@@ -102,11 +102,11 @@ namespace RaidScheduler.Domain.Services
             }
 
             var endTime = dayAndTime.TimeEnd + offset;
-            if (endTime < 0)
+            if (endTime <= 0)
             {
                 endTime = NodaConstants.TicksPerStandardDay + endTime;
             }
-            else if (endTime > NodaConstants.TicksPerStandardDay)
+            else if (endTime >= NodaConstants.TicksPerStandardDay)
             {
                 endTime = endTime - NodaConstants.TicksPerStandardDay;
             }
@@ -181,7 +181,7 @@ namespace RaidScheduler.Domain.Services
                         endTime = leftEndTime;
                     }
                     
-                    var timeEnd = endTime <= NodaConstants.TicksPerStandardDay ? endTime : endTime - NodaConstants.TicksPerStandardDay;
+                    var timeEnd = endTime < NodaConstants.TicksPerStandardDay ? endTime : endTime - NodaConstants.TicksPerStandardDay;
 
                     result = new DayAndTime(leftSide.DayOfWeek, startTime, timeEnd );
 
