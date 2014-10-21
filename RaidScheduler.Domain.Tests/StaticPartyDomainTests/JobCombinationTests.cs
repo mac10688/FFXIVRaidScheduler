@@ -16,60 +16,41 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
     public class JobCombinationTests
     {
 
-        private Player tankPlayer1;
-        private Player tankPlayer2;
-        private Player healerPlayer1;
-        private Player healerPlayer2;
-        private Player dpsPlayer1;
-        private Player dpsPlayer2;
-        private Player dpsPlayer3;
-        private Player dpsPlayer4;
-        private Player playerWithNoJob;
-
-        [TestInitialize]
-        public void TestSetup()
-        {
-            var jobFactory = new JobFactory();
-
-            tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1", "SomeTimezone");
-            var potentialJob1 = new PotentialJob(90, 10, JobTypes.Paladin);
-            tankPlayer1.PotentialJobs.Add(potentialJob1);
-
-            tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", "SomeTimezone");
-            var potentialJob2 = new PotentialJob(90, 10, JobTypes.Warrior);
-            tankPlayer2.PotentialJobs.Add(potentialJob2);
-
-            healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", "SomeTimezone");
-            var potentialJob3 = new PotentialJob(90, 10, JobTypes.WhiteMage);
-            healerPlayer1.PotentialJobs.Add(potentialJob3);
-
-            healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", "SomeTimezone");
-            var potentialJob4 = new PotentialJob(90, 10, JobTypes.Scholar);
-            healerPlayer2.PotentialJobs.Add(potentialJob4);
-
-            dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", "SomeTimezone");
-            var potentialJob5 = new PotentialJob(90, 10, JobTypes.Dragoon);
-            dpsPlayer1.PotentialJobs.Add(potentialJob5);
-
-            dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", "SomeTimezone");
-            var potentialJob6 = new PotentialJob(90, 10, JobTypes.Bard);
-            dpsPlayer2.PotentialJobs.Add(potentialJob6);
-
-            dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", "SomeTimezone");
-            var potentialJob7 = new PotentialJob(90, 10, JobTypes.BlackMage);
-            dpsPlayer3.PotentialJobs.Add(potentialJob7);
-
-            dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", "SomeTimezone");
-            var potentialJob8 = new PotentialJob(90, 10, JobTypes.Summoner);
-            dpsPlayer4.PotentialJobs.Add(potentialJob8);
-
-            playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer", "SomeTimezone");
-
-        }
-
         [TestMethod]
         public void TwoTanks_TwoHealers_FourDps_CTurnOne()
         {
+            var tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1", "SomeTimezone");
+            var potentialJob1 = new PotentialJob(90, 10, JobTypes.Paladin);
+            tankPlayer1.PotentialJobs.Add(potentialJob1);
+
+            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", "SomeTimezone");
+            var potentialJob2 = new PotentialJob(90, 10, JobTypes.Warrior);
+            tankPlayer2.PotentialJobs.Add(potentialJob2);
+
+            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", "SomeTimezone");
+            var potentialJob3 = new PotentialJob(90, 10, JobTypes.WhiteMage);
+            healerPlayer1.PotentialJobs.Add(potentialJob3);
+
+            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", "SomeTimezone");
+            var potentialJob4 = new PotentialJob(90, 10, JobTypes.Scholar);
+            healerPlayer2.PotentialJobs.Add(potentialJob4);
+
+            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", "SomeTimezone");
+            var potentialJob5 = new PotentialJob(90, 10, JobTypes.Dragoon);
+            dpsPlayer1.PotentialJobs.Add(potentialJob5);
+
+            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", "SomeTimezone");
+            var potentialJob6 = new PotentialJob(90, 10, JobTypes.Bard);
+            dpsPlayer2.PotentialJobs.Add(potentialJob6);
+
+            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", "SomeTimezone");
+            var potentialJob7 = new PotentialJob(90, 10, JobTypes.BlackMage);
+            dpsPlayer3.PotentialJobs.Add(potentialJob7);
+
+            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", "SomeTimezone");
+            var potentialJob8 = new PotentialJob(90, 10, JobTypes.Summoner);
+            dpsPlayer4.PotentialJobs.Add(potentialJob8);            
+
             var playerCollection = new List<Player>{
                 tankPlayer1, tankPlayer2, 
                 healerPlayer1, healerPlayer2,
@@ -92,6 +73,34 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void OneTank_TwoHealers_FourDps_CTurnOne()
         {
+            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", "SomeTimezone");
+            var potentialJob2 = new PotentialJob(90, 10, JobTypes.Warrior);
+            tankPlayer2.PotentialJobs.Add(potentialJob2);
+
+            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", "SomeTimezone");
+            var potentialJob3 = new PotentialJob(90, 10, JobTypes.WhiteMage);
+            healerPlayer1.PotentialJobs.Add(potentialJob3);
+
+            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", "SomeTimezone");
+            var potentialJob4 = new PotentialJob(90, 10, JobTypes.Scholar);
+            healerPlayer2.PotentialJobs.Add(potentialJob4);
+
+            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", "SomeTimezone");
+            var potentialJob5 = new PotentialJob(90, 10, JobTypes.Dragoon);
+            dpsPlayer1.PotentialJobs.Add(potentialJob5);
+
+            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", "SomeTimezone");
+            var potentialJob6 = new PotentialJob(90, 10, JobTypes.Bard);
+            dpsPlayer2.PotentialJobs.Add(potentialJob6);
+
+            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", "SomeTimezone");
+            var potentialJob7 = new PotentialJob(90, 10, JobTypes.BlackMage);
+            dpsPlayer3.PotentialJobs.Add(potentialJob7);
+
+            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", "SomeTimezone");
+            var potentialJob8 = new PotentialJob(90, 10, JobTypes.Summoner);
+            dpsPlayer4.PotentialJobs.Add(potentialJob8);
+
             var playerCollection = new List<Player>{
                 tankPlayer2, 
                 healerPlayer1, healerPlayer2,
@@ -113,6 +122,40 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void TwoTanks_TwoHealers_FourDps_OneJobless_CTurnOne()
         {
+            var tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1", "SomeTimezone");
+            var potentialJob1 = new PotentialJob(90, 10, JobTypes.Paladin);
+            tankPlayer1.PotentialJobs.Add(potentialJob1);
+
+            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", "SomeTimezone");
+            var potentialJob2 = new PotentialJob(90, 10, JobTypes.Warrior);
+            tankPlayer2.PotentialJobs.Add(potentialJob2);
+
+            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", "SomeTimezone");
+            var potentialJob3 = new PotentialJob(90, 10, JobTypes.WhiteMage);
+            healerPlayer1.PotentialJobs.Add(potentialJob3);
+
+            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", "SomeTimezone");
+            var potentialJob4 = new PotentialJob(90, 10, JobTypes.Scholar);
+            healerPlayer2.PotentialJobs.Add(potentialJob4);
+
+            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", "SomeTimezone");
+            var potentialJob5 = new PotentialJob(90, 10, JobTypes.Dragoon);
+            dpsPlayer1.PotentialJobs.Add(potentialJob5);
+
+            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", "SomeTimezone");
+            var potentialJob6 = new PotentialJob(90, 10, JobTypes.Bard);
+            dpsPlayer2.PotentialJobs.Add(potentialJob6);
+
+            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", "SomeTimezone");
+            var potentialJob7 = new PotentialJob(90, 10, JobTypes.BlackMage);
+            dpsPlayer3.PotentialJobs.Add(potentialJob7);
+
+            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", "SomeTimezone");
+            var potentialJob8 = new PotentialJob(90, 10, JobTypes.Summoner);
+            dpsPlayer4.PotentialJobs.Add(potentialJob8);
+
+            var playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer", "SomeTimezone");
+
             var playerCollection = new List<Player>{
                 tankPlayer1, tankPlayer2, 
                 healerPlayer1, healerPlayer2,
@@ -133,6 +176,101 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
             staticMembers.Should().ContainSingle(sm => sm.PlayerId == tankPlayer1.PlayerId);
         }
 
+        [TestMethod]
+        public void One_Player_With_All_Jobs_CoilTurn1()
+        {
+            var player1 = new Player(Guid.NewGuid().ToString(), "player1", "player1", "");
+            player1.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90,10,JobTypes.Warrior),
+                    new PotentialJob(90,10,JobTypes.Paladin),
+                    new PotentialJob(90,10,JobTypes.WhiteMage),
+                    new PotentialJob(90,10,JobTypes.Scholar),
+                    new PotentialJob(90,10,JobTypes.Bard),
+                    new PotentialJob(90,10,JobTypes.BlackMage),
+                    new PotentialJob(90,10,JobTypes.Dragoon),
+                    new PotentialJob(90,10,JobTypes.Summoner),
+                    new PotentialJob(90,10,JobTypes.Monk)
+                });
+
+            var raidFactory = new RaidFactory();
+            var coil1 = raidFactory.CreateRaid(RaidType.CoilTurn1);
+
+            var jobFactory = new JobFactory();
+            var jobs = jobFactory.GetAllJobs().ToList();
+
+            var jobCombination = new JobCombination();
+            var staticMembers = jobCombination.FindPotentialJobCombination(new List<Player> { player1 }, coil1, jobs);
+
+            staticMembers.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void Player_With_One_Needed_Job_One()
+        {
+            var player1 = new Player(Guid.NewGuid().ToString(), "player1", "player1", "");
+            player1.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90,10,JobTypes.Warrior),
+                    new PotentialJob(90,10,JobTypes.Paladin)
+                });
+
+            var player2 = new Player(Guid.NewGuid().ToString(), "player2", "player2", "");
+            player2.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90,10,JobTypes.Warrior)
+                });
+
+            var player3 = new Player(Guid.NewGuid().ToString(), "player3", "player3", "");
+            player3.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90, 10, JobTypes.WhiteMage)
+                });
+
+            var player4 = new Player(Guid.NewGuid().ToString(), "player4", "player4", "");
+            player4.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90, 10, JobTypes.WhiteMage)
+                });
+
+            var player5 = new Player(Guid.NewGuid().ToString(), "player5", "player5", "");
+            player5.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90, 10, JobTypes.Bard)
+                });
+
+            var player6 = new Player(Guid.NewGuid().ToString(), "player6", "player6", "");
+            player6.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90, 10, JobTypes.BlackMage)
+                });
+
+            var player7 = new Player(Guid.NewGuid().ToString(), "player7", "player7", "");
+            player7.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90, 10, JobTypes.Summoner)
+                });
+
+            var player8 = new Player(Guid.NewGuid().ToString(), "player8", "player8", "");
+            player8.SetPotentialJobs(new List<PotentialJob>
+                {
+                    new PotentialJob(90, 10, JobTypes.Summoner)
+                });
+
+            var raidFactory = new RaidFactory();
+            var coil1 = raidFactory.CreateRaid(RaidType.CoilTurn1);
+
+            var jobFactory = new JobFactory();
+            var jobs = jobFactory.GetAllJobs().ToList();
+
+            var playerCollection = new List<Player> { player1, player2, player3, player4, player5, player6, player7, player8 };
+
+            var jobCombination = new JobCombination();
+            var staticMembers = jobCombination.FindPotentialJobCombination(playerCollection, coil1, jobs);
+
+            staticMembers.Should().NotBeNull();
+            staticMembers.Should().Contain(p => p.PlayerId == player1.PlayerId && p.ChosenJob == JobTypes.Paladin);
+        }
 
     }
 }

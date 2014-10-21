@@ -74,6 +74,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="JobDomainTests\JobFactoryTests.cs" />
     <Compile Include="StaticPartyDomainTests\PartyCombinationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticPartyDomainTests\JobCombinationTests.cs" />
@@ -86,7 +87,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="JobDomainTests\" />
     <Folder Include="Party\" />
     <Folder Include="PlayerDomainTests\" />
     <Folder Include="RaidDomainTests\" />
