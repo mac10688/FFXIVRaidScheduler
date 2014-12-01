@@ -8,6 +8,7 @@ using RaidScheduler.Domain.Data;
 using System.Data.Entity;
 using System.Linq.Expressions;
 using RaidScheduler.Domain.DomainModels.PlayerDomain;
+using RaidScheduler.Domain.Repositories.Interfaces;
 
 namespace RaidScheduler.Domain.Repositories
 {

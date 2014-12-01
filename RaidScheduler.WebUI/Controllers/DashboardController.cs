@@ -10,6 +10,7 @@ using RaidScheduler.Domain.Repositories;
 using RaidScheduler.WebUI.Models;
 using RaidScheduler.Domain.DomainModels.PlayerDomain;
 using RaidScheduler.Domain.DomainModels.JobDomain;
+using RaidScheduler.Domain.Repositories.Interfaces;
 
 namespace RaidScheduler.Controllers
 {

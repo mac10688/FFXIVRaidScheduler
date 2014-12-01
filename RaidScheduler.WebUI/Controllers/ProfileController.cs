@@ -21,6 +21,7 @@ using RaidScheduler.Domain.DomainModels.UserDomain;
 using RaidScheduler.Domain.DomainModels.PlayerDomain;
 using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
 using RaidScheduler.Domain.DomainModels.SharedValueObject;
+using RaidScheduler.Domain.Repositories.Interfaces;
 
 namespace RaidScheduler.Controllers
 {

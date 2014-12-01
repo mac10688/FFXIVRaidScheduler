@@ -9,6 +9,7 @@ using RaidScheduler.Domain.DomainModels;
 using System.Data.Entity;
 using RaidScheduler.Domain.Data;
 using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
+using RaidScheduler.Domain.Repositories.Interfaces;
 
 namespace RaidScheduler.Domain.Repositories
 {

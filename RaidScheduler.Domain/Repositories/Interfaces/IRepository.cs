@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaidScheduler.Domain.Repositories
+namespace RaidScheduler.Domain.Repositories.Interfaces
 {
     public interface IRepository<T>
     {

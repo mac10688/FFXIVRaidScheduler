@@ -9,7 +9,8 @@ namespace RaidScheduler
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/ThirdPartyLibraries/jquery-{version}.js"));
+                        "~/Scripts/ThirdPartyLibraries/jquery-{version}.js",
+                        "~/Scripts/ThirdPartyLibraries/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/ThirdPartyLibraries/jquery.validate*"));
@@ -22,6 +23,10 @@ namespace RaidScheduler
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/ThirdPartyLibraries/bootstrap.js",
                       "~/Scripts/ThirdPartyLibraries/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/autocomplete").Include(
+                "~/Scripts/ThirdPartyLibraries/typeahead.bundle.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Scripts/ThirdPartyLibraries/knockout-3.0.0.js",

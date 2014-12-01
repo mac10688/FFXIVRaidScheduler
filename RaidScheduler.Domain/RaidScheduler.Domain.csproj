@@ -55,6 +55,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,7 +93,10 @@
     <Compile Include="Migrations\201409281933238_InitialCreate.Designer.cs">
       <DependentUpon>201409281933238_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Queries\DTOS\PlayerSearchDTO.cs" />
+    <Compile Include="Queries\Interfaces\IPlayerSearch.cs" />
+    <Compile Include="Queries\PlayerSearch.cs" />
+    <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="DomainServices\PartyMaker\IJobCombination.cs" />
     <Compile Include="DomainServices\PartyMaker\IPartyService.cs" />

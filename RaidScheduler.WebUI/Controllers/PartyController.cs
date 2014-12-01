@@ -18,6 +18,8 @@ using RaidScheduler.Domain.DomainModels.JobDomain;
 using RaidScheduler.Domain.DomainModels.UserDomain;
 using RaidScheduler.Domain.DomainModels.PlayerDomain;
 using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
+using RaidScheduler.Domain.Repositories.Interfaces;
+using RaidScheduler.Domain.Queries.Interfaces;
 
 namespace RaidScheduler.Controllers
 {
@@ -29,6 +31,7 @@ namespace RaidScheduler.Controllers
         private readonly IJobFactory _jobFactory;
         private readonly IRepository<StaticParty> _staticPartyRepository;
         private readonly UserManager<User> _userManager;
+        private readonly IPlayerSearch _playerSearch;
         //private readonly PartyCombination partyCombination;
         
 
@@ -37,14 +40,16 @@ namespace RaidScheduler.Controllers
             IRepository<Player> playerRepository,
             IRaidFactory raidFactory,
             IJobFactory jobFactory,
-            IRepository<StaticParty> staticPartyRepository
+            IRepository<StaticParty> staticPartyRepository,
+            IPlayerSearch playerSearch
             )
         {
-            this._playerRepository = playerRepository;
-            this._raidFactory = raidFactory;
-            this._jobFactory = jobFactory;
-            this._userManager = userManager;
-            this._staticPartyRepository = staticPartyRepository;
+            _playerRepository = playerRepository;
+            _raidFactory = raidFactory;
+            _jobFactory = jobFactory;
+            _userManager = userManager;
+            _staticPartyRepository = staticPartyRepository;
+            _playerSearch = playerSearch;
         }
 
         /// <summary>
@@ -130,6 +135,18 @@ namespace RaidScheduler.Controllers
         public ActionResult CreateParty()
         {
             return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult SearchForPlayer(string name)
+        {
+            var result = _playerSearch.SearchPlayers(name).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
     }
