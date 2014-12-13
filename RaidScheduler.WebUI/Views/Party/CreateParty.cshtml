@@ -56,8 +56,64 @@
     .tt-suggestion p {
         margin: 0;
     }
+
+    #autoComplete{
+        margin: 10px;
+    }
 </style>
 <input id="autoComplete" type="text" spellcheck="false"/>
+<div id="playerContainer" >
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th>Paladin</th>
+                <th>Warrior</th>
+                <th>White Mage</th>
+                <th>Scholar</th>
+                <th>Black Mage</th>
+                <th>Summoner</th>
+                <th>Dragoon</th>
+                <th>Monk</th>
+                <th>Bard</th>
+            </tr>
+        </thead>
+        <tbody data-bind="template: { name: 'player-template', foreach: Players }">
+
+        </tbody>
+    </table>
+</div>
+
+<script type="text/html" id="player-template">
+    <tr>
+        <td><span data-bind="text: DisplayName"></span></td>
+        <!-- ko foreach: AvailableTimes -->
+        <td>
+            <div data-bind="foreach: TimesAvailable">
+                <ul>
+                    <li>
+                        <span data-bind="text: StartTime"></span>&nbsp;-&nbsp;
+                        <span data-bind="text: EndTime"></span>
+                    </li>
+                </ul>
+            </div>
+        </td>
+        <!-- /ko -->
+
+        <!-- ko foreach: Jobs-->
+        <td>
+            <span data-bind="text: $data == null? '': Ilvl"></span>
+        </td>
+        <!-- /ko -->
+    </tr>
+</script>
 
 @section Scripts {
 

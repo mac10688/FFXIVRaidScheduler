@@ -9,12 +9,6 @@
         required: true
     });
 
-    self.SelectedTimeZone = ko.observable(data.SelectedTimeZone).extend({
-        required: true
-    });
-
-    self.TimeZoneList = ko.observableArray(data.TimeZoneList);
-
     self.PlayerPotentialJobs = ko.observableArray(ko.utils.arrayMap(data.PlayerPotentialJobs, function (playerPotentialJob) {
         return new PlayerPotentialJobModel(playerPotentialJob);
     }));
@@ -92,7 +86,6 @@ var PlayerPotentialJobModel = function (data) {
     var self = this;
     self.PotentialJobID = ko.observable(data.PotentialJobID);
     self.ILvl = ko.observable(data.ILvl).extend({ required: true, number: true });
-    self.ComfortLevel = ko.observable(data.ComfortLevel);
 };
 
 var JobModel = function (data) {

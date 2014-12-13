@@ -14,10 +14,9 @@ namespace RaidScheduler.Domain.DomainModels
     public class PotentialJob
     {
 
-        public PotentialJob(int iLvl, int comfortLevel, JobTypes job)
+        public PotentialJob(int iLvl, JobTypes job)
         {
             ILvl = iLvl;
-            ComfortLevel = comfortLevel;
 
             JobId = job;
 
@@ -28,7 +27,6 @@ namespace RaidScheduler.Domain.DomainModels
         public int PotentialJobId { get; protected set; }
 
         public int ILvl { get; protected set; }
-        public int ComfortLevel { get; protected set; }
 
         public JobTypes JobId { get; protected set; }
 

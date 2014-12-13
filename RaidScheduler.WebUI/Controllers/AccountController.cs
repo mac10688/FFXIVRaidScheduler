@@ -16,19 +16,23 @@ using NodaTime;
 using RaidScheduler.Domain;
 using NodaTime.TimeZones;
 using RaidScheduler.Domain.DomainModels.UserDomain;
+using RaidScheduler.Domain.Repositories.Interfaces;
 
 namespace RaidScheduler.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IRepository<User> _userRepository;
 
         public AccountController(
-            UserManager<User> userManager
+            UserManager<User> userManager,
+            IRepository<User> userRepository
             )
         {
-            this.userManager = userManager;
+            _userManager = userManager;
+            _userRepository = userRepository;
         }
 
         //
@@ -49,7 +53,7 @@ namespace RaidScheduler.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindAsync(model.UserName, model.Password);
+                var user = await _userManager.FindAsync(model.UserName, model.Password);
 
                 if (user != null)
                 {
@@ -80,7 +84,7 @@ namespace RaidScheduler.Controllers
             if (ModelState.IsValid)
             {
                 var user = new User() { UserName = model.UserName};
-                var result = await userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
@@ -103,7 +107,7 @@ namespace RaidScheduler.Controllers
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
         {
             ManageMessageId? message = null;
-            IdentityResult result = await userManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            IdentityResult result = await _userManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
                 message = ManageMessageId.RemoveLoginSuccess;
@@ -127,7 +131,19 @@ namespace RaidScheduler.Controllers
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
+            ViewBag.Timezones = new NodaTime.TimeZones.BclDateTimeZoneSource().GetIds();
+            var timezone = _userManager.FindById(User.Identity.GetUserId()).PreferredTimezone;
+            ViewBag.PreferredTimezone = timezone;
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult ChangeTimezone(string timezone)
+        {            
+            var user = _userRepository.Find(User.Identity.GetUserId());
+            user.PreferredTimezone = timezone;
+            _userRepository.Save(user);
+            return Json(true);
         }
 
         //
@@ -143,7 +159,7 @@ namespace RaidScheduler.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                    IdentityResult result = await _userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
@@ -165,7 +181,7 @@ namespace RaidScheduler.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await userManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                    IdentityResult result = await _userManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
@@ -204,7 +220,7 @@ namespace RaidScheduler.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login
-            var user = await userManager.FindAsync(loginInfo.Login);
+            var user = await _userManager.FindAsync(loginInfo.Login);
             if (user != null)
             {
                 await SignInAsync(user, isPersistent: false);
@@ -238,7 +254,7 @@ namespace RaidScheduler.Controllers
             {
                 return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
             }
-            var result = await userManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            var result = await _userManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             if (result.Succeeded)
             {
                 return RedirectToAction("Manage");
@@ -267,10 +283,10 @@ namespace RaidScheduler.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new User() { UserName = model.UserName };
-                var result = await userManager.CreateAsync(user);
+                var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    result = await userManager.AddLoginAsync(user.Id, info.Login);
+                    result = await _userManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
@@ -305,19 +321,9 @@ namespace RaidScheduler.Controllers
         [ChildActionOnly]
         public ActionResult RemoveAccountList()
         {
-            var linkedAccounts = userManager.GetLogins(User.Identity.GetUserId());
+            var linkedAccounts = _userManager.GetLogins(User.Identity.GetUserId());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && userManager != null)
-            {
-                userManager.Dispose();
-                userManager = null;
-            }
-            base.Dispose(disposing);
         }
 
         #region Helpers
@@ -335,7 +341,7 @@ namespace RaidScheduler.Controllers
         private async Task SignInAsync(User user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            var identity = await userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            var identity = await _userManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
         }
 
@@ -349,7 +355,7 @@ namespace RaidScheduler.Controllers
 
         private bool HasPassword()
         {
-            var user = userManager.FindById(User.Identity.GetUserId());
+            var user = _userManager.FindById(User.Identity.GetUserId());
             if (user != null)
             {
                 return user.PasswordHash != null;

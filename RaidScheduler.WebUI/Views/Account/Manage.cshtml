@@ -1,4 +1,4 @@
-﻿@model RaidScheduler.WebUI.Models.
+﻿@model RaidScheduler.WebUI.Models.ManageUserViewModel
 @using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Manage Account";
@@ -9,6 +9,25 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
     <div class="col-md-12">
+
+        <select id="timezone">
+            <option>Choose a Timezone</option>
+            @foreach (var timezone in ViewBag.Timezones)
+            {
+                if (timezone == ViewBag.PreferredTimezone)
+                {
+                    <option value="@timezone" selected="selected">@timezone</option>
+                }
+                else
+                {
+                    <option value="@timezone">@timezone</option>
+                }
+
+            }
+        </select>
+        <br />
+        <br />
+
         @if (ViewBag.HasLocalPassword)
         {
             @Html.Partial("_ChangePasswordPartial")
@@ -18,12 +37,25 @@
             @Html.Partial("_SetPasswordPartial")
         }
 
-        <section id="externalLogins">
-            @Html.Action("RemoveAccountList")
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+        
+
     </div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#timezone').change(function () {
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json",
+                    data: JSON.stringify({ Timezone: $(this).val() }),
+                    url: "/Account/ChangeTimezone",
+                })
+                .done(function (msg) {
+                    alert('Done');
+                });
+            });
+        });
+    </script>
 }

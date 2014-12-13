@@ -19,7 +19,7 @@ using RaidScheduler.Domain.DomainModels.UserDomain;
 using RaidScheduler.Domain.DomainModels.PlayerDomain;
 using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
 using RaidScheduler.Domain.Repositories.Interfaces;
-using RaidScheduler.Domain.Queries.Interfaces;
+using RaidScheduler.Domain.Queries.UserDefinedParties.Interfaces;
 
 namespace RaidScheduler.Controllers
 {
@@ -48,8 +48,8 @@ namespace RaidScheduler.Controllers
             _raidFactory = raidFactory;
             _jobFactory = jobFactory;
             _userManager = userManager;
-            _staticPartyRepository = staticPartyRepository;
             _playerSearch = playerSearch;
+            _staticPartyRepository = staticPartyRepository;
         }
 
         /// <summary>
@@ -92,8 +92,8 @@ namespace RaidScheduler.Controllers
             var user = _userManager.FindById(userID);
             var player = _playerRepository.Get(p => p.UserId == user.Id).SingleOrDefault();
             if(player != null)
-            { 
-                var timezoneString = player.TimeZone;
+            {
+                var timezoneString = user.PreferredTimezone;
                 var timezone = NodaTime.DateTimeZoneProviders.Bcl.GetZoneOrNull(timezoneString);
                 var offset = timezone.GetUtcOffset(SystemClock.Instance.Now);
                 var staticParties = _staticPartyRepository.Get();
@@ -142,11 +142,17 @@ namespace RaidScheduler.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [HttpGet]
         public JsonResult SearchForPlayer(string name)
         {
             var result = _playerSearch.SearchPlayers(name).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetPlayerInfo(string Id)
+        {
+            var result = _playerSearch.GetPlayer(Id, User.Identity.GetUserId());
+            return Json(result);
         }
 
     }

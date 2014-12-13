@@ -25,8 +25,8 @@ namespace RaidScheduler.App_Start
     using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
     using RaidScheduler.Domain.DomainModels.UserDomain;
     using RaidScheduler.Domain.Repositories.Interfaces;
-    using RaidScheduler.Domain.Queries.Interfaces;
-    using RaidScheduler.Domain.Queries;
+    using RaidScheduler.Domain.Queries.UserDefinedParties.Interfaces;
+    using RaidScheduler.Domain.Queries.UserDefinedParties;
 
     public static class NinjectWebCommon 
     {
@@ -82,6 +82,8 @@ namespace RaidScheduler.App_Start
 
             kernel.Bind<IRepository<Player>>().To<PlayerRepository>();                      
             kernel.Bind<IRepository<StaticParty>>().To<StaticPartyRepository>();
+            kernel.Bind<IRepository<User>>().To<UserRepository>();
+
             kernel.Bind<IRaidFactory>().To<RaidFactory>();
             kernel.Bind<IJobFactory>().To<JobFactory>();
             kernel.Bind<IPlayerSearch>().To<PlayerSearch>();

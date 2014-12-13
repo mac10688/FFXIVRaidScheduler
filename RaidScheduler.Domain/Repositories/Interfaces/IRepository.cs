@@ -25,9 +25,9 @@ namespace RaidScheduler.Domain.Repositories.Interfaces
         /// <summary>
         /// Find a given entity.
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="Id"></param>
         /// <returns></returns>
-        T Find(string ID);
+        T Find(string Id);
 
         /// <summary>
         /// Get all the entities or apply an Expression to filter.

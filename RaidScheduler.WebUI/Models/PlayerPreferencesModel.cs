@@ -45,8 +45,7 @@ namespace RaidScheduler.WebUI.Models
         public int PotentialJobID { get; set; }
         [Required]
         public int ILvl { get; set; }
-        [Required, Range(0,10)]
-        public int ComfortLevel { get; set; }
+
     }
 
     public class PlayerRaidRequestedModel

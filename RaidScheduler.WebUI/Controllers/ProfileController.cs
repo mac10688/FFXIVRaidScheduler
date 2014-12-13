@@ -68,32 +68,27 @@ namespace RaidScheduler.Controllers
             { 
                 model.FirstName = player.FirstName;
                 model.LastName = player.LastName;
-                model.SelectedTimeZone = player.TimeZone;
 
                 model.RaidsRequested = player.RaidsRequested.Select(rr => _raidFactory.CreateRaid(rr.RaidType).RaidName).ToList();
 
-                if (player.TimeZone != null)
-                {
-                    var timezone = DateTimeZoneProviders.Bcl.GetZoneOrNull(player.TimeZone);
-                    var offset = timezone.GetUtcOffset(SystemClock.Instance.Now);
+                var timezone = DateTimeZoneProviders.Bcl.GetZoneOrNull(user.PreferredTimezone);
+                var offset = timezone.GetUtcOffset(SystemClock.Instance.Now);
 
-                    model.DaysAndTimesAvailable = player.DaysAndTimesAvailable.Select(rr =>
-                        new DayAndTimeAvailableModel
-                        {
-                            Day = rr.DayAndTime.DayOfWeek.ToString(),
-                            TimeAvailableStart = (rr.DayAndTime.TimeStart / NodaConstants.TicksPerMillisecond),
-                            TimeAvailableEnd = (rr.DayAndTime.TimeEnd / NodaConstants.TicksPerMillisecond),
-                        }).ToList();
+                model.DaysAndTimesAvailable = player.DaysAndTimesAvailable.Select(rr =>
+                    new DayAndTimeAvailableModel
+                    {
+                        Day = rr.DayAndTime.DayOfWeek.ToString(),
+                        TimeAvailableStart = (rr.DayAndTime.TimeStart / NodaConstants.TicksPerMillisecond),
+                        TimeAvailableEnd = (rr.DayAndTime.TimeEnd / NodaConstants.TicksPerMillisecond),
+                    }).ToList();
 
-                    model.PlayerPotentialJobs = player.PotentialJobs.Select(pj =>
-                        new PlayerPotentialJobModel
-                        {
-                            PlayerPotentialJobID = pj.PotentialJobId,
-                            PotentialJobID = (int)pj.JobId,
-                            ILvl = pj.ILvl,
-                            ComfortLevel = pj.ComfortLevel
-                        }).ToList();
-                }
+                model.PlayerPotentialJobs = player.PotentialJobs.Select(pj =>
+                    new PlayerPotentialJobModel
+                    {
+                        PlayerPotentialJobID = pj.PotentialJobId,
+                        PotentialJobID = (int)pj.JobId,
+                        ILvl = pj.ILvl
+                    }).ToList();
             }            
 
             model.PotentialJobsToChoose = _jobFactory.GetAllJobs().Select(j =>
@@ -129,12 +124,13 @@ namespace RaidScheduler.Controllers
                 var player = _playerRepository.Get(p => p.UserId == playerUser.Id).SingleOrDefault();
                 if(player == null)
                 {
-                    player = new Player(playerUser.Id, playerPreferences.FirstName, playerPreferences.LastName, playerPreferences.SelectedTimeZone);
+                    player = new Player(playerUser.Id, playerPreferences.FirstName, playerPreferences.LastName);
                 }
                 else
                 {
-                    player.TimeZone = playerPreferences.SelectedTimeZone;
-                }
+                    player.FirstName = playerPreferences.FirstName;
+                    player.LastName = playerPreferences.LastName;
+                }                
 
                 //var raidsRequested = player.RaidsRequested.ToList();
 
@@ -159,7 +155,7 @@ namespace RaidScheduler.Controllers
                 foreach(var modelPotentialJob in playerPreferences.PlayerPotentialJobs)
                 {
                     var jobType = allJobsPossible.Where(j => modelPotentialJob.PotentialJobID == j.JobId).Single().JobType;
-                    var potentialJob = new PotentialJob(modelPotentialJob.ILvl, modelPotentialJob.ComfortLevel, jobType);
+                    var potentialJob = new PotentialJob(modelPotentialJob.ILvl, jobType);
                     allPotentialJobs.Add(potentialJob);
                 }
 
@@ -178,7 +174,7 @@ namespace RaidScheduler.Controllers
                     var timeEnd = timeAvailableEnd.TickOfDay;
 
                     var day = (IsoDayOfWeek)Enum.Parse(typeof(IsoDayOfWeek), d.Day, true);
-                    var dayAndTime = new DayAndTime(day, timeStart, timeEnd);
+                    var dayAndTime = new DayAndTime(day, timeStart, timeEnd, playerUser.PreferredTimezone);
 
                     var availableDayaAndTime = new PlayerDayAndTimeAvailable(dayAndTime);
 

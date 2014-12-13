@@ -45,57 +45,57 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
             var startTime = new LocalDateTime(2014, 9, 16, 11, 0, 0);
             var endTime = new LocalDateTime(2014, 9, 16, 13, 0, 0);
 
-            var dayAndTime = new DayAndTime(IsoDayOfWeek.Monday, startTime, endTime);
+            var dayAndTime = new DayAndTime(IsoDayOfWeek.Monday, startTime, endTime, CentralStandardTime);
 
-            tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1", CentralStandardTime);
-            var potentialJob1 = new PotentialJob(90, 10, JobTypes.Paladin);
+            tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1");
+            var potentialJob1 = new PotentialJob(90, JobTypes.Paladin);
             tankPlayer1.PotentialJobs.Add(potentialJob1);
             tankPlayer1.AddToRaidRequested(RaidType.CoilTurn1);
             tankPlayer1.AddToDayAndTimeAvailable(dayAndTime);
 
-            tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", CentralStandardTime);
-            var potentialJob2 = new PotentialJob(90, 10, JobTypes.Warrior);
+            tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2");
+            var potentialJob2 = new PotentialJob(90, JobTypes.Warrior);
             tankPlayer2.PotentialJobs.Add(potentialJob2);
             tankPlayer2.AddToRaidRequested(RaidType.CoilTurn1);
             tankPlayer2.AddToDayAndTimeAvailable(dayAndTime);
 
-            healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", CentralStandardTime);
-            var potentialJob3 = new PotentialJob(90, 10, JobTypes.WhiteMage);
+            healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1");
+            var potentialJob3 = new PotentialJob(90, JobTypes.WhiteMage);
             healerPlayer1.PotentialJobs.Add(potentialJob3);
             healerPlayer1.AddToRaidRequested(RaidType.CoilTurn1);
             healerPlayer1.AddToDayAndTimeAvailable(dayAndTime);
 
-            healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", CentralStandardTime);
-            var potentialJob4 = new PotentialJob(90, 10, JobTypes.Scholar);
+            healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2");
+            var potentialJob4 = new PotentialJob(90, JobTypes.Scholar);
             healerPlayer2.PotentialJobs.Add(potentialJob4);
             healerPlayer2.AddToRaidRequested(RaidType.CoilTurn1);
             healerPlayer2.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", CentralStandardTime);
-            var potentialJob5 = new PotentialJob(90, 10, JobTypes.Dragoon);
+            dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1");
+            var potentialJob5 = new PotentialJob(90, JobTypes.Dragoon);
             dpsPlayer1.PotentialJobs.Add(potentialJob5);
             dpsPlayer1.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer1.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", CentralStandardTime);
-            var potentialJob6 = new PotentialJob(90, 10, JobTypes.Bard);
+            dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2");
+            var potentialJob6 = new PotentialJob(90, JobTypes.Bard);
             dpsPlayer2.PotentialJobs.Add(potentialJob6);
             dpsPlayer2.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer2.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", CentralStandardTime);
-            var potentialJob7 = new PotentialJob(90, 10, JobTypes.BlackMage);
+            dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3");
+            var potentialJob7 = new PotentialJob(90, JobTypes.BlackMage);
             dpsPlayer3.PotentialJobs.Add(potentialJob7);
             dpsPlayer3.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer3.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", CentralStandardTime);
-            var potentialJob8 = new PotentialJob(90, 10, JobTypes.Summoner);
+            dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4");
+            var potentialJob8 = new PotentialJob(90, JobTypes.Summoner);
             dpsPlayer4.PotentialJobs.Add(potentialJob8);
             dpsPlayer4.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer4.AddToDayAndTimeAvailable(dayAndTime);
 
-            playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer", CentralStandardTime);
+            playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer");
 
         }
 
@@ -134,7 +134,7 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
             var schedule = new Mock<ISchedulingDomainService>();
             schedule.Setup(s => s.CommonScheduleAmongAllPlayers(It.IsAny<List<Player>>())).Returns(() => new List<DayAndTime>
                 {
-                    new DayAndTime(IsoDayOfWeek.Monday, new LocalDateTime(2014, 9, 16, 16, 0, 0),new LocalDateTime(2014, 9, 16, 18, 0, 0))
+                    new DayAndTime(IsoDayOfWeek.Monday, new LocalDateTime(2014, 9, 16, 16, 0, 0),new LocalDateTime(2014, 9, 16, 18, 0, 0), TimeZoneInfo.Utc.Id)
                 });
 
             var coilTurn1 = new Raid(RaidType.CoilTurn1, "Coil Turn 1",

@@ -9,5 +9,6 @@ namespace RaidScheduler.Domain.DomainModels.UserDomain
 {
     public class User : IdentityUser
     {
+        public string PreferredTimezone { get; set; }
     }
 }

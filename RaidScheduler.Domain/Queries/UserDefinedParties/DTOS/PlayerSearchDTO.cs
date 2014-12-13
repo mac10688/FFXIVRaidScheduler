@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RaidScheduler.Domain.Queries.DTOS
+namespace RaidScheduler.Domain.Queries.UserDefinedParties.DTOS
 {
     public class PlayerSearchDTO
     {

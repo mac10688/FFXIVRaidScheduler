@@ -16,17 +16,15 @@ namespace RaidScheduler.Domain.DomainModels.PlayerDomain
         public string PlayerId { get; protected set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string TimeZone { get; set; }
 
         public string UserId { get; protected set; }
 
-        public Player(string userId, string firstName, string lastName, string timeZone)
+        public Player(string userId, string firstName, string lastName)
         {
             PlayerId = Guid.NewGuid().ToString();
             UserId = userId;
             FirstName = firstName;
             LastName = lastName;
-            TimeZone = timeZone;
         }
 
         protected Player() { }

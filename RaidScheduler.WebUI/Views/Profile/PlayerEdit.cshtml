@@ -4,7 +4,7 @@
     <div class="panel-body">
         <input data-bind="value: FirstName" placeholder="First Name" />
         <input data-bind="value: LastName" placeholder="Last Name" />
-        <select data-bind="options: TimeZoneList, value: SelectedTimeZone, optionsCaption: 'Choose a timezone'"></select>
+
         @*<input data-bind="kendoDropDownList: { data: TimeZoneList, value: SelectedTimeZone }" />*@
     </div>
 
@@ -34,8 +34,6 @@
         <select data-bind="options: $root.PotentialJobsToChoose, optionsText: 'JobName', optionsValue: 'JobID', value: PotentialJobID"></select>
         @*<input data-bind="kendoDropDownList: { dataTextField: 'JobName', dataValueField: 'JobID', data: $root.PotentialJobsToChoose, value: $data.PotentialJobID }" />*@
         <input type="text" placeholder="ILvl" data-bind="value: ILvl" />
-        <label>ComfortLevel: </label>
-        <input data-bind="kendoSlider: ComfortLevel, min:1, max: 10" placeholder="ComfortLevel" />
         <span class="glyphicon glyphicon-remove" data-bind="click: $root.RemovePotentialJob"></span>
     </div>
 </script>
@@ -56,7 +54,7 @@
 
 @section Scripts {
 
-    <script type="text/javascript" src="~/Scripts/RaidSchdulerScripts/PlayerEdit.js"></script>
+    <script type="text/javascript" src="~/Scripts/RaidSchedulerScripts/PlayerEdit.js"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
