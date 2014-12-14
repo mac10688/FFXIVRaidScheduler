@@ -13,7 +13,76 @@ namespace RaidScheduler.WebUI.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public string SelectedTimeZone { get; set; }
+        public string SelectedServer { get; set; }
+
+        private IList<string> availableServers = new List<string>()
+        {
+            "Aegis",
+            "Atomos",
+            "Carbuncle",
+            "Garuda",
+            "Gungnir",
+            "Kujata",
+            "Ramuh",
+            "Tonberry",
+            "Typhon",
+            "Unicorn",
+            "Alexander",
+            "Bahamut",
+            "Durandel",
+            "Fenrir",
+            "Ifrit",
+            "Ridill",
+            "Tiamat",
+            "Ultima",
+            "Valefor",
+            "Yojimbo",
+            "Zeromus",
+            "Anima",
+            "Asura",
+            "Belias",
+            "Chocobo",
+            "Hades",
+            "Ixion",
+            "Mandragora",
+            "Masamune",
+            "Pandaemonium",
+            "Shinryu",
+            "Titan",
+            "Adamantoise",
+            "Balmug",
+            "Cactuar",
+            "Coeurl",
+            "Faerie",
+            "Gilgamesh",
+            "Goblin",
+            "Jenova",
+            "Mateus",
+            "Midgardsormr",
+            "Sargatanas",
+            "Siren",
+            "Zalera",
+            "Behemoth",
+            "Brynhildr",
+            "Diabolos",
+            "Excalibur",
+            "Exodus",
+            "Famfrit",
+            "Hyperion",
+            "Lamia",
+            "Leviathan",
+            "Malboro",
+            "Ultros",
+            "Cerberus",
+            "Lich",
+            "Moogle",
+            "Odin",
+            "Phoenix",
+            "Ragnarok",
+            "Shiva",
+            "Zodiark"
+        };
+        public IList<string> AvailableServers { get { return availableServers; } set { availableServers = value; } }
 
         private IList<string> timeZoneList = new List<string>();
         public IList<string> TimeZoneList { get; set; }

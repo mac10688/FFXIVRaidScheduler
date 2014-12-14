@@ -4,8 +4,9 @@
     <div class="panel-body">
         <input data-bind="value: FirstName" placeholder="First Name" />
         <input data-bind="value: LastName" placeholder="Last Name" />
-
-        @*<input data-bind="kendoDropDownList: { data: TimeZoneList, value: SelectedTimeZone }" />*@
+        <select data-bind="options: AvailableServers,
+                           value: SelectedServer,
+                           optionsCaption: 'Choose Server'"></select>
     </div>
 
     <div class="panel-body">

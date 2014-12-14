@@ -36,6 +36,8 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         private const string CentralStandardTime = "Central Standard Time";
         private const string EasternStandardTime = "Eastern Standard Time";
 
+        public const string CERBERUS = "Cerberus";
+
         [TestInitialize]
         public void TestSetup()
         {
@@ -47,55 +49,55 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
 
             var dayAndTime = new DayAndTime(IsoDayOfWeek.Monday, startTime, endTime, CentralStandardTime);
 
-            tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1");
+            tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1", CERBERUS);
             var potentialJob1 = new PotentialJob(90, JobTypes.Paladin);
             tankPlayer1.PotentialJobs.Add(potentialJob1);
             tankPlayer1.AddToRaidRequested(RaidType.CoilTurn1);
             tankPlayer1.AddToDayAndTimeAvailable(dayAndTime);
 
-            tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2");
+            tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", CERBERUS);
             var potentialJob2 = new PotentialJob(90, JobTypes.Warrior);
             tankPlayer2.PotentialJobs.Add(potentialJob2);
             tankPlayer2.AddToRaidRequested(RaidType.CoilTurn1);
             tankPlayer2.AddToDayAndTimeAvailable(dayAndTime);
 
-            healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1");
+            healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", CERBERUS);
             var potentialJob3 = new PotentialJob(90, JobTypes.WhiteMage);
             healerPlayer1.PotentialJobs.Add(potentialJob3);
             healerPlayer1.AddToRaidRequested(RaidType.CoilTurn1);
             healerPlayer1.AddToDayAndTimeAvailable(dayAndTime);
 
-            healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2");
+            healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", CERBERUS);
             var potentialJob4 = new PotentialJob(90, JobTypes.Scholar);
             healerPlayer2.PotentialJobs.Add(potentialJob4);
             healerPlayer2.AddToRaidRequested(RaidType.CoilTurn1);
             healerPlayer2.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1");
+            dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", CERBERUS);
             var potentialJob5 = new PotentialJob(90, JobTypes.Dragoon);
             dpsPlayer1.PotentialJobs.Add(potentialJob5);
             dpsPlayer1.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer1.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2");
+            dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", CERBERUS);
             var potentialJob6 = new PotentialJob(90, JobTypes.Bard);
             dpsPlayer2.PotentialJobs.Add(potentialJob6);
             dpsPlayer2.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer2.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3");
+            dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", CERBERUS);
             var potentialJob7 = new PotentialJob(90, JobTypes.BlackMage);
             dpsPlayer3.PotentialJobs.Add(potentialJob7);
             dpsPlayer3.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer3.AddToDayAndTimeAvailable(dayAndTime);
 
-            dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4");
+            dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", CERBERUS);
             var potentialJob8 = new PotentialJob(90, JobTypes.Summoner);
             dpsPlayer4.PotentialJobs.Add(potentialJob8);
             dpsPlayer4.AddToRaidRequested(RaidType.CoilTurn1);
             dpsPlayer4.AddToDayAndTimeAvailable(dayAndTime);
 
-            playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer");
+            playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer", CERBERUS);
 
         }
 

@@ -68,6 +68,7 @@ namespace RaidScheduler.Controllers
             { 
                 model.FirstName = player.FirstName;
                 model.LastName = player.LastName;
+                model.SelectedServer = player.Server;
 
                 model.RaidsRequested = player.RaidsRequested.Select(rr => _raidFactory.CreateRaid(rr.RaidType).RaidName).ToList();
 
@@ -124,12 +125,13 @@ namespace RaidScheduler.Controllers
                 var player = _playerRepository.Get(p => p.UserId == playerUser.Id).SingleOrDefault();
                 if(player == null)
                 {
-                    player = new Player(playerUser.Id, playerPreferences.FirstName, playerPreferences.LastName);
+                    player = new Player(playerUser.Id, playerPreferences.FirstName, playerPreferences.LastName, playerPreferences.SelectedServer);
                 }
                 else
                 {
                     player.FirstName = playerPreferences.FirstName;
                     player.LastName = playerPreferences.LastName;
+                    player.Server = playerPreferences.SelectedServer;
                 }                
 
                 //var raidsRequested = player.RaidsRequested.ToList();

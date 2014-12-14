@@ -18,13 +18,15 @@ namespace RaidScheduler.Domain.DomainModels.PlayerDomain
         public string LastName { get; set; }
 
         public string UserId { get; protected set; }
+        public string Server { get; set; }
 
-        public Player(string userId, string firstName, string lastName)
+        public Player(string userId, string firstName, string lastName, string server)
         {
             PlayerId = Guid.NewGuid().ToString();
             UserId = userId;
             FirstName = firstName;
             LastName = lastName;
+            Server = server;
         }
 
         protected Player() { }
@@ -118,5 +120,6 @@ namespace RaidScheduler.Domain.DomainModels.PlayerDomain
                 DaysAndTimesAvailable.Add(ta);
             }
         }
+
     }
 }

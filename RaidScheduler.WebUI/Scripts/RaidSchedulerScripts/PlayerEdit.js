@@ -9,6 +9,12 @@
         required: true
     });
 
+    self.SelectedServer = ko.observable(data.SelectedServer).extend({
+        required: true
+    });
+
+    self.AvailableServers = ko.observableArray(data.AvailableServers);
+
     self.PlayerPotentialJobs = ko.observableArray(ko.utils.arrayMap(data.PlayerPotentialJobs, function (playerPotentialJob) {
         return new PlayerPotentialJobModel(playerPotentialJob);
     }));

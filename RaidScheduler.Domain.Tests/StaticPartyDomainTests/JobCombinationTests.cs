@@ -15,39 +15,40 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
     [TestClass]
     public class JobCombinationTests
     {
+        public const string CERBERUS = "Cerberus";
 
         [TestMethod]
         public void TwoTanks_TwoHealers_FourDps_CTurnOne()
         {
-            var tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1" );
+            var tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1", CERBERUS );
             var potentialJob1 = new PotentialJob(90, JobTypes.Paladin);
             tankPlayer1.PotentialJobs.Add(potentialJob1);
 
-            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2");
+            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", CERBERUS);
             var potentialJob2 = new PotentialJob(90, JobTypes.Warrior);
             tankPlayer2.PotentialJobs.Add(potentialJob2);
 
-            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1");
+            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", CERBERUS);
             var potentialJob3 = new PotentialJob(90, JobTypes.WhiteMage);
             healerPlayer1.PotentialJobs.Add(potentialJob3);
 
-            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2");
+            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", CERBERUS);
             var potentialJob4 = new PotentialJob(90, JobTypes.Scholar);
             healerPlayer2.PotentialJobs.Add(potentialJob4);
 
-            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1");
+            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", CERBERUS);
             var potentialJob5 = new PotentialJob(90, JobTypes.Dragoon);
             dpsPlayer1.PotentialJobs.Add(potentialJob5);
 
-            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2");
+            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", CERBERUS);
             var potentialJob6 = new PotentialJob(90, JobTypes.Bard);
             dpsPlayer2.PotentialJobs.Add(potentialJob6);
 
-            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3");
+            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", CERBERUS);
             var potentialJob7 = new PotentialJob(90, JobTypes.BlackMage);
             dpsPlayer3.PotentialJobs.Add(potentialJob7);
 
-            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4");
+            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", CERBERUS);
             var potentialJob8 = new PotentialJob(90, JobTypes.Summoner);
             dpsPlayer4.PotentialJobs.Add(potentialJob8);            
 
@@ -73,31 +74,31 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void OneTank_TwoHealers_FourDps_CTurnOne()
         {
-            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2");
+            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", CERBERUS);
             var potentialJob2 = new PotentialJob(90, JobTypes.Warrior);
             tankPlayer2.PotentialJobs.Add(potentialJob2);
 
-            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1");
+            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", CERBERUS);
             var potentialJob3 = new PotentialJob(90, JobTypes.WhiteMage);
             healerPlayer1.PotentialJobs.Add(potentialJob3);
 
-            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2");
+            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", CERBERUS);
             var potentialJob4 = new PotentialJob(90, JobTypes.Scholar);
             healerPlayer2.PotentialJobs.Add(potentialJob4);
 
-            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1");
+            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", CERBERUS);
             var potentialJob5 = new PotentialJob(90, JobTypes.Dragoon);
             dpsPlayer1.PotentialJobs.Add(potentialJob5);
 
-            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2");
+            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", CERBERUS);
             var potentialJob6 = new PotentialJob(90, JobTypes.Bard);
             dpsPlayer2.PotentialJobs.Add(potentialJob6);
 
-            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3");
+            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", CERBERUS);
             var potentialJob7 = new PotentialJob(90, JobTypes.BlackMage);
             dpsPlayer3.PotentialJobs.Add(potentialJob7);
 
-            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4");
+            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", CERBERUS);
             var potentialJob8 = new PotentialJob(90, JobTypes.Summoner);
             dpsPlayer4.PotentialJobs.Add(potentialJob8);
 
@@ -122,39 +123,39 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void TwoTanks_TwoHealers_FourDps_OneJobless_CTurnOne()
         {
-            var tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1");
+            var tankPlayer1 = new Player(Guid.NewGuid().ToString(), "Tank1", "Tank1", CERBERUS);
             var potentialJob1 = new PotentialJob(90, JobTypes.Paladin);
             tankPlayer1.PotentialJobs.Add(potentialJob1);
 
-            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2");
+            var tankPlayer2 = new Player(Guid.NewGuid().ToString(), "Tank2", "Tank2", CERBERUS);
             var potentialJob2 = new PotentialJob(90, JobTypes.Warrior);
             tankPlayer2.PotentialJobs.Add(potentialJob2);
 
-            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1");
+            var healerPlayer1 = new Player(Guid.NewGuid().ToString(), "Healer1", "Healer1", CERBERUS);
             var potentialJob3 = new PotentialJob(90, JobTypes.WhiteMage);
             healerPlayer1.PotentialJobs.Add(potentialJob3);
 
-            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2");
+            var healerPlayer2 = new Player(Guid.NewGuid().ToString(), "Healer2", "Healer2", CERBERUS);
             var potentialJob4 = new PotentialJob(90, JobTypes.Scholar);
             healerPlayer2.PotentialJobs.Add(potentialJob4);
 
-            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1");
+            var dpsPlayer1 = new Player(Guid.NewGuid().ToString(), "Dps1", "Dps1", CERBERUS);
             var potentialJob5 = new PotentialJob(90, JobTypes.Dragoon);
             dpsPlayer1.PotentialJobs.Add(potentialJob5);
 
-            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2");
+            var dpsPlayer2 = new Player(Guid.NewGuid().ToString(), "Dps2", "Dps2", CERBERUS);
             var potentialJob6 = new PotentialJob(90, JobTypes.Bard);
             dpsPlayer2.PotentialJobs.Add(potentialJob6);
 
-            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3");
+            var dpsPlayer3 = new Player(Guid.NewGuid().ToString(), "Dps3", "Dps3", CERBERUS);
             var potentialJob7 = new PotentialJob(90, JobTypes.BlackMage);
             dpsPlayer3.PotentialJobs.Add(potentialJob7);
 
-            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4");
+            var dpsPlayer4 = new Player(Guid.NewGuid().ToString(), "Dps4", "Dps4", CERBERUS);
             var potentialJob8 = new PotentialJob(90, JobTypes.Summoner);
             dpsPlayer4.PotentialJobs.Add(potentialJob8);
 
-            var playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer");
+            var playerWithNoJob = new Player(Guid.NewGuid().ToString(), "BlankPlayer", "BlankPlayer", CERBERUS);
 
             var playerCollection = new List<Player>{
                 tankPlayer1, tankPlayer2, 
@@ -179,7 +180,7 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void One_Player_With_All_Jobs_CoilTurn1()
         {
-            var player1 = new Player(Guid.NewGuid().ToString(), "player1", "player1");
+            var player1 = new Player(Guid.NewGuid().ToString(), "player1", "player1", CERBERUS);
             player1.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90, JobTypes.Warrior),
@@ -208,50 +209,50 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void Player_With_One_Needed_Job_One()
         {
-            var player1 = new Player(Guid.NewGuid().ToString(), "player1", "player1");
+            var player1 = new Player(Guid.NewGuid().ToString(), "player1", "player1", CERBERUS);
             player1.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90,JobTypes.Warrior),
                     new PotentialJob(90,JobTypes.Paladin)
                 });
 
-            var player2 = new Player(Guid.NewGuid().ToString(), "player2", "player2");
+            var player2 = new Player(Guid.NewGuid().ToString(), "player2", "player2", CERBERUS);
             player2.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90,JobTypes.Warrior)
                 });
 
-            var player3 = new Player(Guid.NewGuid().ToString(), "player3", "player3");
+            var player3 = new Player(Guid.NewGuid().ToString(), "player3", "player3", CERBERUS);
             player3.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90, JobTypes.WhiteMage)
                 });
 
-            var player4 = new Player(Guid.NewGuid().ToString(), "player4", "player4");
+            var player4 = new Player(Guid.NewGuid().ToString(), "player4", "player4", CERBERUS);
             player4.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90, JobTypes.WhiteMage)
                 });
 
-            var player5 = new Player(Guid.NewGuid().ToString(), "player5", "player5");
+            var player5 = new Player(Guid.NewGuid().ToString(), "player5", "player5", CERBERUS);
             player5.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90, JobTypes.Bard)
                 });
 
-            var player6 = new Player(Guid.NewGuid().ToString(), "player6", "player6");
+            var player6 = new Player(Guid.NewGuid().ToString(), "player6", "player6", CERBERUS);
             player6.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90, JobTypes.BlackMage)
                 });
 
-            var player7 = new Player(Guid.NewGuid().ToString(), "player7", "player7");
+            var player7 = new Player(Guid.NewGuid().ToString(), "player7", "player7", CERBERUS);
             player7.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90, JobTypes.Summoner)
                 });
 
-            var player8 = new Player(Guid.NewGuid().ToString(), "player8", "player8");
+            var player8 = new Player(Guid.NewGuid().ToString(), "player8", "player8", CERBERUS);
             player8.SetPotentialJobs(new List<PotentialJob>
                 {
                     new PotentialJob(90, JobTypes.Summoner)

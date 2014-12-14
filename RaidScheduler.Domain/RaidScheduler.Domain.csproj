@@ -97,6 +97,14 @@
     <Compile Include="Migrations\201412120150304_Changing How To Store Timezone.Designer.cs">
       <DependentUpon>201412120150304_Changing How To Store Timezone.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412132340591_No More Comfort Level.cs" />
+    <Compile Include="Migrations\201412132340591_No More Comfort Level.Designer.cs">
+      <DependentUpon>201412132340591_No More Comfort Level.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412140040013_Adding Server Specification to each player.cs" />
+    <Compile Include="Migrations\201412140040013_Adding Server Specification to each player.Designer.cs">
+      <DependentUpon>201412140040013_Adding Server Specification to each player.cs</DependentUpon>
+    </Compile>
     <Compile Include="Queries\UserDefinedParties\DTOS\PlayerSearchDTO.cs" />
     <Compile Include="Queries\UserDefinedParties\Interfaces\IPlayerSearch.cs" />
     <Compile Include="Queries\UserDefinedParties\DTOS\Player.cs" />
@@ -127,6 +135,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412120150304_Changing How To Store Timezone.resx">
       <DependentUpon>201412120150304_Changing How To Store Timezone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412132340591_No More Comfort Level.resx">
+      <DependentUpon>201412132340591_No More Comfort Level.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412140040013_Adding Server Specification to each player.resx">
+      <DependentUpon>201412140040013_Adding Server Specification to each player.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

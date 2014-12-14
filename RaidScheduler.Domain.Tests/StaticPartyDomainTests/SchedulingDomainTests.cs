@@ -18,6 +18,8 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         private const string CentralStandardTime = "Central Standard Time";
         private const string EasternStandardTime = "Eastern Standard Time";
 
+        public const string CERBERUS = "Cerberus";
+
         [TestMethod]
         public void TwoPlayers_With_SameTimeAndTimezone()
         {
@@ -26,14 +28,14 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
             var player1EndTime = new LocalDateTime(2014,9,16,13,0,0);
             var player1DayAndTime = new DayAndTime(IsoDayOfWeek.Monday, player1StartTime.TickOfDay, player1EndTime.TickOfDay, CentralStandardTime);
             var player1DayAndTimeAvailable = new PlayerDayAndTimeAvailable(player1DayAndTime);
-            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1");
+            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1", CERBERUS);
             player1.DaysAndTimesAvailable.Add(player1DayAndTimeAvailable);
                         
             var player2StartTime = new LocalDateTime(2014, 9, 16, 11, 0, 0);
             var player2EndTime = new LocalDateTime(2014, 9, 16, 13, 0, 0);
             var player2DayAndTime = new DayAndTime(IsoDayOfWeek.Monday, player2StartTime.TickOfDay, player2EndTime.TickOfDay, CentralStandardTime);
             var player2DayAndTimeAvailable = new PlayerDayAndTimeAvailable(player2DayAndTime);
-            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2");
+            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2", CERBERUS);
             player2.DaysAndTimesAvailable.Add(player2DayAndTimeAvailable);
 
             var players = new List<Player>() { player1, player2 };
@@ -54,14 +56,14 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void TwoPlayers_With_SameTimeButDifferentTimezones()
         {
-            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1");
+            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1", CERBERUS);
             var player1Start = new LocalDateTime(2014, 9, 16, 11, 0, 0);
             var player1End = new LocalDateTime(2014, 9, 16, 13, 0, 0);
             var player1DayAndTime = new DayAndTime(IsoDayOfWeek.Monday, player1Start.TickOfDay, player1End.TickOfDay, CentralStandardTime);
             var player1DayAndTimeAvailable = new PlayerDayAndTimeAvailable(player1DayAndTime);
             player1.DaysAndTimesAvailable.Add(player1DayAndTimeAvailable);
-            
-            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2");
+
+            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2", CERBERUS);
             var player2Start = new LocalDateTime(2014, 9, 16, 12, 0, 0);
             var player2End = new LocalDateTime(2014, 9, 16, 14, 0, 0);
             var player2DayAndTime = new DayAndTime(IsoDayOfWeek.Monday, player2Start.TickOfDay, player2End.TickOfDay, EasternStandardTime);
@@ -86,7 +88,7 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void TwoPlayers_With_NoTimeInCommon()
         {
-            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1");
+            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1", CERBERUS);
 
             var elevenOclock = new LocalDateTime(2014, 9, 16, 11, 0, 0);
             var oneOclock = new LocalDateTime(2014, 9, 16, 13, 0, 0);
@@ -102,7 +104,7 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
             var twelveOclock = new LocalDateTime(2014, 9, 16, 14, 0, 0);
             var twoOclock = new LocalDateTime(2014, 9, 16, 16, 0, 0);
 
-            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2");
+            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2", CERBERUS);
             var player2DayAndTime = new DayAndTime(IsoDayOfWeek.Monday, twelveOclock.TickOfDay, twoOclock.TickOfDay, EasternStandardTime);
             var player2DayAndTimeAvailable = new PlayerDayAndTimeAvailable(player2DayAndTime);
             player2.DaysAndTimesAvailable.Add(player2DayAndTimeAvailable);
@@ -121,15 +123,15 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void TwoPlayers_With_DifferentTz_OneHourOverlap_NearMonday()
         {
-            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1");                        
+            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1", CERBERUS);                        
             var player1TimeStart = new LocalDateTime(2014, 9, 21, 19, 0, 0); //7 p.m. central
             var player1TimeEnd = new LocalDateTime(2014, 9, 21, 21, 0, 0); //9 p.m. central
             var player1DayAndTime = new DayAndTime(IsoDayOfWeek.Sunday, player1TimeStart.TickOfDay, player1TimeEnd.TickOfDay, CentralStandardTime);
             var player1DayAndTimeAvailable = new PlayerDayAndTimeAvailable(player1DayAndTime);
             player1.DaysAndTimesAvailable.Add(player1DayAndTimeAvailable);
 
-            
-            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2");
+
+            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2", CERBERUS);
             var player2TimeStart = new LocalDateTime(2014, 9, 21, 21, 0, 0); //9 p.m. eastern
             var player2TimeEnd = new LocalDateTime(2014, 9, 21, 0, 0, 0); //12 a.m. eastern
             var player2DayAndTime = new DayAndTime(IsoDayOfWeek.Sunday, player2TimeStart.TickOfDay, player2TimeEnd.TickOfDay, EasternStandardTime);
@@ -154,7 +156,7 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
         [TestMethod]
         public void TwoPlayers_With_DifferentTz_OneHourOverlap_NearMonday_Switch_Times()
         {
-            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1");
+            var player1 = new Player(Guid.NewGuid().ToString(), "Player1", "Player1", CERBERUS);
             var player1TimeStart = new LocalDateTime(2014, 9, 21, 21, 0, 0); //9 p.m. eastern
             var player1TimeEnd = new LocalDateTime(2014, 9, 21, 0, 0, 0); //12 a.m. eastern            
             var player1DayAndTime = new DayAndTime(IsoDayOfWeek.Sunday, player1TimeStart.TickOfDay, player1TimeEnd.TickOfDay, EasternStandardTime );
@@ -162,7 +164,7 @@ namespace RaidScheduler.Domain.Tests.StaticPartyDomainTests
             player1.DaysAndTimesAvailable.Add(player1DayAndTimeAvailable);
 
 
-            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2");
+            var player2 = new Player(Guid.NewGuid().ToString(), "Player2", "Player2", CERBERUS);
             var player2TimeStart = new LocalDateTime(2014, 9, 21, 19, 0, 0); //7 p.m. central
             var player2TimeEnd = new LocalDateTime(2014, 9, 21, 21, 0, 0); //9 p.m. central
             var player2DayAndTime = new DayAndTime(IsoDayOfWeek.Sunday, player2TimeStart.TickOfDay, player2TimeEnd.TickOfDay, CentralStandardTime);
