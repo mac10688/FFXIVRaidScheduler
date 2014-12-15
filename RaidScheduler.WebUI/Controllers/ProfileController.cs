@@ -22,6 +22,7 @@ using RaidScheduler.Domain.DomainModels.PlayerDomain;
 using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
 using RaidScheduler.Domain.DomainModels.SharedValueObject;
 using RaidScheduler.Domain.Repositories.Interfaces;
+using RaidScheduler.Domain.DomainModels.ServerDomain;
 
 namespace RaidScheduler.Controllers
 {
@@ -33,6 +34,7 @@ namespace RaidScheduler.Controllers
         private readonly IJobFactory _jobFactory;
         private readonly IRaidFactory _raidFactory;        
         private readonly IPartyService _partyCombination;
+        private readonly Server _server;
         
 
         public ProfileController(
@@ -41,7 +43,8 @@ namespace RaidScheduler.Controllers
             IRaidFactory raidFactory,
             IJobFactory jobFactory,
             IRepository<StaticParty> staticPartyRepository,
-            IPartyService partyCombination
+            IPartyService partyCombination,
+            Server server
             )
         {
             _userManager = userManager;
@@ -50,6 +53,7 @@ namespace RaidScheduler.Controllers
             _jobFactory = jobFactory;
             _partyCombination = partyCombination;
             _staticPartyRepository = staticPartyRepository;
+            _server = server;
         }
 
         /// <summary>
@@ -63,6 +67,9 @@ namespace RaidScheduler.Controllers
             var user = _userManager.FindById(User.Identity.GetUserId());
             var player = _playerRepository.Get((p) => p.UserId == user.Id).SingleOrDefault();
             var timezoneSource = new BclDateTimeZoneSource();
+
+            model.AvailableServers = _server.GetAllServers().OrderBy(x => x).ToList();
+
             model.TimeZoneList = timezoneSource.GetIds().OrderBy(tz => tz).ToList();
             if(player != null)
             { 

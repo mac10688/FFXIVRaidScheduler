@@ -9,7 +9,7 @@ namespace RaidScheduler.Domain.Queries.UserDefinedParties.Interfaces
 {
     public interface IPlayerSearch
     {
-        IEnumerable<PlayerSearchDTO> SearchPlayers(string searchString);
+        IEnumerable<PlayerSearchDTO> SearchPlayers(string server, string searchString);
         Player GetPlayer(string Id, string timezone);
     }
 }

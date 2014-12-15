@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="DomainModels\JobDomain\IJobFactory.cs" />
     <Compile Include="DomainModels\RaidDomain\RaidTypes.cs" />
+    <Compile Include="DomainModels\ServerDomain\Server.cs" />
     <Compile Include="DomainServices\PartyMaker\Combinatorics\Combinations.cs" />
     <Compile Include="DomainServices\PartyMaker\Combinatorics\GenerateOption.cs" />
     <Compile Include="DomainServices\PartyMaker\Combinatorics\IMetaCollection.cs" />

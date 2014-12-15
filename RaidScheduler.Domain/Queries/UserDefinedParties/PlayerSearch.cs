@@ -19,10 +19,10 @@ namespace RaidScheduler.Domain.Queries.UserDefinedParties
             _context = context;
         }
 
-        public IEnumerable<PlayerSearchDTO> SearchPlayers(string searchString)
+        public IEnumerable<PlayerSearchDTO> SearchPlayers(string server, string searchString)
         {
             var firstnameOrLastName = searchString;
-            var result = _context.Player.Where(p => p.FirstName.Contains(searchString) || p.LastName.Contains(searchString))
+            var result = _context.Player.Where(p =>( p.FirstName.Contains(searchString) || p.LastName.Contains(searchString)) && p.Server == server)
                 .Select(p => new PlayerSearchDTO
                 {
                     Id = p.PlayerId,

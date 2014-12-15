@@ -20,6 +20,8 @@ using RaidScheduler.Domain.DomainModels.PlayerDomain;
 using RaidScheduler.Domain.DomainModels.StaticPartyDomain;
 using RaidScheduler.Domain.Repositories.Interfaces;
 using RaidScheduler.Domain.Queries.UserDefinedParties.Interfaces;
+using RaidScheduler.Domain.DomainModels.ServerDomain;
+using RaidScheduler.WebUI.Models;
 
 namespace RaidScheduler.Controllers
 {
@@ -32,6 +34,7 @@ namespace RaidScheduler.Controllers
         private readonly IRepository<StaticParty> _staticPartyRepository;
         private readonly UserManager<User> _userManager;
         private readonly IPlayerSearch _playerSearch;
+        private readonly Server _server;
         //private readonly PartyCombination partyCombination;
         
 
@@ -41,7 +44,8 @@ namespace RaidScheduler.Controllers
             IRaidFactory raidFactory,
             IJobFactory jobFactory,
             IRepository<StaticParty> staticPartyRepository,
-            IPlayerSearch playerSearch
+            IPlayerSearch playerSearch,
+            Server server
             )
         {
             _playerRepository = playerRepository;
@@ -50,6 +54,7 @@ namespace RaidScheduler.Controllers
             _userManager = userManager;
             _playerSearch = playerSearch;
             _staticPartyRepository = staticPartyRepository;
+            _server = server;
         }
 
         /// <summary>
@@ -134,7 +139,10 @@ namespace RaidScheduler.Controllers
         /// <returns></returns>
         public ActionResult CreateParty()
         {
-            return View();
+            var partyModel = new CreatePartyModel();
+
+            partyModel.AvailableServers = _server.GetAllServers().OrderBy(x => x).ToList();
+            return View(partyModel);
         }
 
         /// <summary>
@@ -142,9 +150,9 @@ namespace RaidScheduler.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public JsonResult SearchForPlayer(string name)
+        public JsonResult SearchForPlayer(string name, string server)
         {
-            var result = _playerSearch.SearchPlayers(name).ToList();
+            var result = _playerSearch.SearchPlayers(server, name).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

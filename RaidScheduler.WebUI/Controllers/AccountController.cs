@@ -18,6 +18,7 @@ using NodaTime.TimeZones;
 using RaidScheduler.Domain.DomainModels.UserDomain;
 using RaidScheduler.Domain.Repositories.Interfaces;
 
+
 namespace RaidScheduler.Controllers
 {
     [Authorize]
@@ -25,6 +26,7 @@ namespace RaidScheduler.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IRepository<User> _userRepository;
+        
 
         public AccountController(
             UserManager<User> userManager,
@@ -33,6 +35,7 @@ namespace RaidScheduler.Controllers
         {
             _userManager = userManager;
             _userRepository = userRepository;
+            
         }
 
         //

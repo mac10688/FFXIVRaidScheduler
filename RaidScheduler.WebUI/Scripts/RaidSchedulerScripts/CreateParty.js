@@ -1,24 +1,27 @@
-﻿
-
-
-
-
-var CreateParty = function (data) {
+﻿var CreateParty = function (data) {
     var self = this;
     self.Players = ko.observableArray();
 
-    $(document).ready(function () {
-
+    self.setupEngine = function () {
         var engine = new Bloodhound({
             datumTokenizer: function (d) {
                 return Bloodhound.tokenizers.obj.whitespace(d.Name);
             },
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: '/Party/SearchForPlayer?name=%QUERY',
+            remote:{ 
+                url: '/Party/SearchForPlayer?name=%QUERY',
+                replace: function (query) {
+                    var q = '/Party/SearchForPlayer?name=' + $('#autoComplete').val() + '&server=' + $('#serverSelection').val();
+                    return q;
+                }
+        }
         });
 
-        engine.initialize();
+        engine.initialize(true);
+        return engine;
+    };
 
+    self.setupTypeAhead = function (engine) {
         $('#autoComplete').typeahead({
             hint: true,
             highlight: true,
@@ -41,6 +44,20 @@ var CreateParty = function (data) {
         }).bind('typeahead:autocompleted', function (obj, datum) {
             alert('autocompleted');
         });
+    };
+
+    self.configureAutoComplete = function () {
+        var engine = self.setupEngine();
+        self.setupTypeAhead(engine);
+    };
+
+    $(document).ready(function () {        
+        self.configureAutoComplete();
+        
+        //$('#serverSelection').change(function () {
+        //    $('#autoComplete').typeahead('destroy');
+        //    self.configureAutoComplete();
+        //});
 
     });
 
