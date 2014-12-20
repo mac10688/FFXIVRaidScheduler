@@ -2,14 +2,14 @@
 
 <link href="~/css/RaidSchedulerStyles/CreateParty.css" rel="stylesheet" />
 
-<select id="serverSelection">
+<select id="serverSelection" class="form-control">
     @foreach(var server in Model.AvailableServers)
     {
         <option value="@server">@server</option>
     }
 </select>
 <br />
-<input id="autoComplete" type="text" spellcheck="false"/>
+<input id="autoComplete" type="text" class="form-control" spellcheck="false"/>
 
 <div id="playerContainer" >
     <table class="table table-bordered">
