@@ -4,7 +4,7 @@
 <link href="~/css/RaidSchedulerStyles/CreateParty.css" rel="stylesheet" />
 
 <div class="col-sm-12">
-    <div class="col-sm-2">
+    <div class="col-sm-2 form-group">
         <label for="serverSelection" class="control-label">Select Server</label>
         <select id="serverSelection" class="form-control">
             @foreach (var server in Model.AvailableServers)
@@ -13,15 +13,18 @@
             }
         </select>
     </div>    
-    <div class="col-sm-2">
+    <div class="col-sm-2 form-group">
         <label for="autoComplete" class="control-label">Search Player</label>
         <input id="autoComplete" type="text" class="form-control" spellcheck="false" />
     </div>
 </div>
 
+<br />
+<br />
+<br />
 
 <div class="col-sm-12" id="playerContainer" >
-    <table class="table table-bordered">
+    <table class="table table-bordered table-hover table-responsive">
         <thead>
             <tr>
                 <th>Player</th>

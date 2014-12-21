@@ -462,6 +462,7 @@
     <Content Include="css\kendo.default.css" />
     <Content Include="css\kendo.default.min.css" />
     <Content Include="css\RaidSchedulerStyles\Login.css" />
+    <Content Include="css\RaidSchedulerStyles\PlayerChoice.css" />
     <Content Include="css\RaidSchedulerStyles\PlayerEdit.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

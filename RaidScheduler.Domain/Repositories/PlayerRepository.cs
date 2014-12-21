@@ -51,6 +51,21 @@ namespace RaidScheduler.Domain.Repositories
 
         public void Delete(Player entity)
         {
+            foreach(var raid in entity.RaidsRequested.ToList())
+            {
+                context.Entry<RaidRequested>(raid).State = EntityState.Deleted;
+            }
+
+            foreach(var dayAndTime in entity.DaysAndTimesAvailable.ToList())
+            {
+                context.Entry<PlayerDayAndTimeAvailable>(dayAndTime).State = EntityState.Deleted;
+            }
+
+            foreach(var job in entity.PotentialJobs.ToList())
+            {
+                context.Entry<PotentialJob>(job).State = EntityState.Deleted;
+            }
+
             context.Entry<Player>(entity).State = EntityState.Deleted;
             context.SaveChanges();
         }        

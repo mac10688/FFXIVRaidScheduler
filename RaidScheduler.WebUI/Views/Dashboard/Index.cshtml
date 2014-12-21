@@ -1,5 +1,8 @@
-﻿<div id="PieChartContainer" style="width: 900px; height: 500px;">
-
+﻿@model RaidScheduler.WebUI.Models.JobPercentageModel
+<div id="PieChartContainer" style="width: 900px; height: 500px;">
+    <div>
+        <div id="piechart"></div>
+    </div>
 </div>
 
 @section Scripts
@@ -7,7 +10,22 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script>
         $(document).ready(function () {
-            $('#PieChartContainer').load("/Dashboard/PlayerPercentageChart/");
+            (function () {            
+                google.load("visualization", "1", { packages: ["corechart"], "callback": function () { } });            
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable(
+                      @Html.Raw(Json.Encode(Model.JobAndCountModel))
+                    );
+
+                    var options = {
+                        title: 'Job Percentage'
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart.draw(data, options);
+                }
+                google.setOnLoadCallback(drawChart);
+            })();
         });
     </script>    
 }

@@ -1,20 +1,28 @@
 ﻿@model RaidScheduler.WebUI.Models.PlayerChoiceModel
+<link href="~/css/RaidSchedulerStyles/PlayerChoice.css" rel="stylesheet" />
 <div>
     @Html.ActionLink("Create New Player", "PlayerEdit", "Profile")
     <br />
-    @if (!@Model.PlayerModels.Any())
-    {
-        <span>No Players to choose. Please Create a player.</span>
-    }
-    else
-    {
-        <ol>
-            @foreach(var player in Model.PlayerModels )
-            {
-            <li>
-                @Html.ActionLink(player.PlayerFirstName + " " + player.PlayerLastName, "PlayerEdit", "Profile", new { playerId = player.PlayerId }, null)
-            </li>
-            }
-        </ol>
-    }
+    
+    <span data-bind="visible: ShowNoPlayersText">No Players to choose. Please Create a player.</span>    
+    
+    <ol data-bind="foreach: PlayerModels">
+        <li>
+            <a data-bind="click: GoToEditPlayerScreen, text: PlayerFullname"></a>&nbsp;&nbsp;
+            <span class="deleteButton glyphicon glyphicon-remove" data-bind="click: $root.RemovePlayer"></span>
+        </li>
+    </ol>
+    
 </div>
+
+@section Scripts {
+    
+    <script src="~/Scripts/RaidSchedulerScripts/PlayerChoice.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var jsonModel = @Html.Raw(Json.Encode(@Model))
+            viewModel = new PlayerChoiceModel(jsonModel);
+            ko.applyBindings(viewModel);
+        });
+    </script>
+}

@@ -29,7 +29,27 @@ namespace RaidScheduler.Controllers
         // GET: /Dashboard/
         public ActionResult Index()
         {
-            return View();
+            var jobAndCountModel = new JobPercentageModel();
+
+            jobAndCountModel.JobAndCountModel.Add(new object[2]{
+                "Job", "Job Portion"
+            });
+
+            var jobs = _jobFactory.GetAllJobs();
+
+            var potentialJobs = _playerRepository.Get().SelectMany(p => p.PotentialJobs).GroupBy(p => p.JobId);
+
+            foreach (var job in potentialJobs)
+            {
+                var jobType = job.First().JobId;
+                jobAndCountModel.JobAndCountModel.Add(new object[2]
+                    {                        
+                        jobs.Where(j => j.JobType == jobType).Single().JobName,
+                        job.Count()            
+                    });
+            }
+            //return PartialView("_PlayerPercentageChart", jobAndCountModel);
+            return View(jobAndCountModel);
         }
 
         /// <summary>

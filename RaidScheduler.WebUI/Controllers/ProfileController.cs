@@ -70,6 +70,21 @@ namespace RaidScheduler.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public JsonResult RemovePlayer(string playerId)
+        {
+            try
+            {
+                var player = _playerRepository.Find(playerId);
+                _playerRepository.Delete(player);
+                return Json(true);
+            }
+            catch(Exception ex)
+            {
+                return Json(false);
+            }            
+        }
+
         /// <summary>
         /// Returns the view for a player to edit their profile.
         /// </summary>
