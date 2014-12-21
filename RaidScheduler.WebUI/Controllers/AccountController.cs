@@ -61,7 +61,7 @@ namespace RaidScheduler.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal("/Party/PlayerCombinations");
+                    return RedirectToAction("Index", "Dashboard");
                 }
             }
 
@@ -74,6 +74,12 @@ namespace RaidScheduler.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.Timezones = new NodaTime.TimeZones.BclDateTimeZoneSource().GetIds().OrderBy(tz => tz).Select(tz => new SelectListItem
+                {
+                    Selected = false,
+                    Text = tz,
+                    Value = tz
+                }).ToList();
             return View();
         }
 
@@ -84,20 +90,30 @@ namespace RaidScheduler.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && new NodaTime.TimeZones.BclDateTimeZoneSource().GetIds().Contains(model.Timezone))
             {
+
                 var user = new User() { UserName = model.UserName};
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);                
                 if (result.Succeeded)
                 {
+                    var userCustom = _userRepository.Find(User.Identity.GetUserId());
+                    user.PreferredTimezone = model.Timezone;
+                    _userRepository.Save(user);
                     await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("PlayerEdit", "Profile");
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 else
                 {
                     AddErrors(result);
                 }
             }
+            ViewBag.Timezones = new NodaTime.TimeZones.BclDateTimeZoneSource().GetIds().OrderBy(tz => tz).Select(tz => new SelectListItem
+            {
+                Selected = false,
+                Text = tz,
+                Value = tz
+            }).ToList();
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -134,7 +150,7 @@ namespace RaidScheduler.Controllers
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
-            ViewBag.Timezones = new NodaTime.TimeZones.BclDateTimeZoneSource().GetIds();
+            ViewBag.Timezones = new NodaTime.TimeZones.BclDateTimeZoneSource().GetIds().OrderBy(tz => tz).ToList();
             var timezone = _userManager.FindById(User.Identity.GetUserId()).PreferredTimezone;
             ViewBag.PreferredTimezone = timezone;
             return View();

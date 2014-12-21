@@ -8,8 +8,7 @@
     $(document).ready(function () {
         (function () {
             
-            google.load("visualization", "1", { packages: ["corechart"], "callback": function () { } });
-            google.setOnLoadCallback(drawChart);
+            google.load("visualization", "1", { packages: ["corechart"], "callback": function () { } });            
             function drawChart() {
                 var data = google.visualization.arrayToDataTable(
                   @Html.Raw(Json.Encode(Model.JobAndCountModel))
@@ -22,6 +21,7 @@
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, options);
             }
+            google.setOnLoadCallback(drawChart);
         })();
     });
 </script>

@@ -13,7 +13,7 @@ namespace RaidScheduler.WebUI.Models
 
     public class PlayerModel
     {
-        public string PlayerID { get; set; }
+        public string PlayerId { get; set; }
         public string PlayerFirstName { get; set; }
         public string PlayerLastName { get; set; }
     }

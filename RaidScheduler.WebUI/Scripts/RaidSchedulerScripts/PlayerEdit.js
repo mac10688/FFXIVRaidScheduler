@@ -1,6 +1,8 @@
 ﻿var PlayerEdit = function (data) {
     var self = this;
 
+    self.PlayerId = ko.observable(data.PlayerId);
+
     self.FirstName = ko.observable(data.FirstName).extend({
         required: true
     });

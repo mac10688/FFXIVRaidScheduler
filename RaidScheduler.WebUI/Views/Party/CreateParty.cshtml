@@ -1,17 +1,26 @@
 ﻿@model RaidScheduler.WebUI.Models.CreatePartyModel
 
+
 <link href="~/css/RaidSchedulerStyles/CreateParty.css" rel="stylesheet" />
 
-<select id="serverSelection" class="form-control">
-    @foreach(var server in Model.AvailableServers)
-    {
-        <option value="@server">@server</option>
-    }
-</select>
-<br />
-<input id="autoComplete" type="text" class="form-control" spellcheck="false"/>
+<div class="col-sm-12">
+    <div class="col-sm-2">
+        <label for="serverSelection" class="control-label">Select Server</label>
+        <select id="serverSelection" class="form-control">
+            @foreach (var server in Model.AvailableServers)
+            {
+                <option value="@server">@server</option>
+            }
+        </select>
+    </div>    
+    <div class="col-sm-2">
+        <label for="autoComplete" class="control-label">Search Player</label>
+        <input id="autoComplete" type="text" class="form-control" spellcheck="false" />
+    </div>
+</div>
 
-<div id="playerContainer" >
+
+<div class="col-sm-12" id="playerContainer" >
     <table class="table table-bordered">
         <thead>
             <tr>

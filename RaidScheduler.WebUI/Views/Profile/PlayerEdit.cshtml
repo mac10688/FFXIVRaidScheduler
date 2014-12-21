@@ -1,18 +1,18 @@
 ﻿@model RaidScheduler.WebUI.Models.PlayerPreferencesModel
-
+<link href="~/css/RaidSchedulerStyles/PlayerEdit.css" rel="stylesheet" />
 <form role="form" class="form-horizontal" data-bind="submit: SavePlayer">
         <div class="form-group">
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <label for="firstName" class="control-label">First Name</label>
                 <input id="firstName" data-bind="value: FirstName" placeholder="First Name" class="form-control" />
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <label for="LastName" class="control-label">Last Name</label>
                 <input id="LastName" data-bind="value: LastName" placeholder="Last Name" class="form-control" />
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <label for="server" class="control-label">Select Server </label>
                 <select id="server" class="form-control" data-bind="options: AvailableServers,
                            value: SelectedServer,
@@ -20,18 +20,29 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <button class="btn btn-primary" data-bind="click: AddNewPotentialJob">Add Potential Job</button>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Jobs</h3>
+        </div>
+        <div class="panel-body">
             <div data-bind="template: { name: 'PotentialJob-Template', foreach: PlayerPotentialJobs }"></div>
+
+            <button id="addJob" class="btn btn-primary" data-bind="click: AddNewPotentialJob">Add Potential Job</button>
+        </div>
+    </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Available Time</h3>
+            </div>
+            <div class="panel-body">
+                <div data-bind="template: { name: 'DayAndTimeAvailable-Template', foreach: DaysAndTimesAvailable }"></div>
+
+                <button id="addTimeAvailable" class="btn btn-primary" data-bind="click: AddDayAndTimeAvailable">Add Available Time</button>
+            </div>
         </div>
 
         <div class="form-group">
-            <button class="btn btn-primary" data-bind="click: AddDayAndTimeAvailable">Add Day And Time Available</button>
-            <div data-bind="template: { name: 'DayAndTimeAvailable-Template', foreach: DaysAndTimesAvailable }"></div>
-        </div>
-
-        <div class="form-group">
-            @*<select data-bind="options:$root.RaidsAvailable, optionsValue: 'RaidID', optionsText: 'RaidName', selectedOptions: RaidsRequested" size="5" multiple="multiple"></select>*@
             <label for="selectRaid" class="control-label">Select Raid</label>
             <input id="selectRaid" data-bind="kendoMultiSelect: {data: $root.RaidsAvailable, value:$root.RaidsRequested}" />
         </div>
@@ -49,12 +60,12 @@
             <select id="selectJob" class="form-control" data-bind="options: $root.PotentialJobsToChoose, optionsText: 'JobName', optionsValue: 'JobID', value: PotentialJobID"></select>
         </div>
 
-        <div class="col-sm-1">
+        <div class="col-sm-2">
             <label for="iLvl" class="control-label">Ilvl</label>
-            <input class="form-control" type="number" min="0" placeholder="ILvl" data-bind="value: ILvl" />       
+            <input class="form-control" type="number" min="0" placeholder="ILvl" data-bind="value: ILvl" />
         </div>
         <div class="col-sm-2">
-            <span class="glyphicon glyphicon-remove" data-bind="click: $root.RemovePotentialJob"></span>
+            <span class="deleteButton glyphicon glyphicon-remove" data-bind="click: $root.RemovePotentialJob"></span>
         </div>
     </div>
 </script>
@@ -76,7 +87,7 @@
             <input id="timeEnd" class="" data-bind="kendoTimePicker: TimeAvailableEnd" />           
         </div>        
         
-        <span class="glyphicon glyphicon-remove" data-bind="click: $root.RemoveDayAndTimeAvailable"></span>
+        <span class="deleteButton glyphicon glyphicon-remove" data-bind="click: $root.RemoveDayAndTimeAvailable"></span>
 </div>
 </script>
 

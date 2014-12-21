@@ -56,31 +56,40 @@ namespace RaidScheduler.Controllers
             _server = server;
         }
 
+        public ActionResult PlayerChoice()
+        {
+            var model = new PlayerChoiceModel();
+            var userId = User.Identity.GetUserId();
+            model.PlayerModels = _playerRepository.Get(p => p.UserId == userId).Select(p => new PlayerModel
+                {
+                    PlayerId = p.PlayerId,
+                    PlayerFirstName = p.FirstName,
+                    PlayerLastName = p.LastName
+                }).ToList();
+
+            return View(model);
+        }
+
         /// <summary>
         /// Returns the view for a player to edit their profile.
         /// </summary>
         /// <returns></returns>
-        public ActionResult PlayerEdit()
+        public ActionResult PlayerEdit(string playerId)
         {
-            PlayerPreferencesModel model = new PlayerPreferencesModel();
-
-            var user = _userManager.FindById(User.Identity.GetUserId());
-            var player = _playerRepository.Get((p) => p.UserId == user.Id).SingleOrDefault();
+            PlayerPreferencesModel model = new PlayerPreferencesModel();            
             var timezoneSource = new BclDateTimeZoneSource();
-
             model.AvailableServers = _server.GetAllServers().OrderBy(x => x).ToList();
-
             model.TimeZoneList = timezoneSource.GetIds().OrderBy(tz => tz).ToList();
-            if(player != null)
-            { 
+
+            if(!String.IsNullOrEmpty(playerId))
+            {
+                var player = _playerRepository.Get((p) => p.PlayerId == playerId).Single();
+                model.PlayerId = player.PlayerId;
                 model.FirstName = player.FirstName;
                 model.LastName = player.LastName;
                 model.SelectedServer = player.Server;
 
                 model.RaidsRequested = player.RaidsRequested.Select(rr => _raidFactory.CreateRaid(rr.RaidType).RaidName).ToList();
-
-                var timezone = DateTimeZoneProviders.Bcl.GetZoneOrNull(user.PreferredTimezone);
-                var offset = timezone.GetUtcOffset(SystemClock.Instance.Now);
 
                 model.DaysAndTimesAvailable = player.DaysAndTimesAvailable.Select(rr =>
                     new DayAndTimeAvailableModel
@@ -129,13 +138,14 @@ namespace RaidScheduler.Controllers
 
                 var currentUserId = User.Identity.GetUserId();
                 var playerUser = _userManager.FindById(currentUserId);
-                var player = _playerRepository.Get(p => p.UserId == playerUser.Id).SingleOrDefault();
-                if(player == null)
+                Player player = null;
+                if(string.IsNullOrEmpty(playerPreferences.PlayerId))
                 {
                     player = new Player(playerUser.Id, playerPreferences.FirstName, playerPreferences.LastName, playerPreferences.SelectedServer);
                 }
                 else
                 {
+                    player = _playerRepository.Get(p => p.PlayerId == playerPreferences.PlayerId).Single();
                     player.FirstName = playerPreferences.FirstName;
                     player.LastName = playerPreferences.LastName;
                     player.Server = playerPreferences.SelectedServer;
@@ -193,20 +203,20 @@ namespace RaidScheduler.Controllers
 
                 _playerRepository.Save(player);
 
-                var oldParty = _staticPartyRepository.Get();
-                oldParty.ToList().ForEach(p =>
-                {
-                    _staticPartyRepository.Delete(p);
-                });
+                //var oldParty = _staticPartyRepository.Get();
+                //oldParty.ToList().ForEach(p =>
+                //{
+                //    _staticPartyRepository.Delete(p);
+                //});
 
-                var players = _playerRepository.Get().ToList();
+                //var players = _playerRepository.Get().ToList();
 
-                var staticParties = _partyCombination.CreateStaticPartiesFromPlayers(players);
+                //var staticParties = _partyCombination.CreateStaticPartiesFromPlayers(players);
                     
-                foreach (var party in staticParties)
-                {
-                    _staticPartyRepository.Save(party);
-                }
+                //foreach (var party in staticParties)
+                //{
+                //    _staticPartyRepository.Save(party);
+                //}
 
                 return Json(new { Message = "success", PlayerID = player.PlayerId });
             }

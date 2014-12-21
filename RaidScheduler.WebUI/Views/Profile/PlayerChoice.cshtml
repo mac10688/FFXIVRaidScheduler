@@ -1,0 +1,20 @@
+﻿@model RaidScheduler.WebUI.Models.PlayerChoiceModel
+<div>
+    @Html.ActionLink("Create New Player", "PlayerEdit", "Profile")
+    <br />
+    @if (!@Model.PlayerModels.Any())
+    {
+        <span>No Players to choose. Please Create a player.</span>
+    }
+    else
+    {
+        <ol>
+            @foreach(var player in Model.PlayerModels )
+            {
+            <li>
+                @Html.ActionLink(player.PlayerFirstName + " " + player.PlayerLastName, "PlayerEdit", "Profile", new { playerId = player.PlayerId }, null)
+            </li>
+            }
+        </ol>
+    }
+</div>
