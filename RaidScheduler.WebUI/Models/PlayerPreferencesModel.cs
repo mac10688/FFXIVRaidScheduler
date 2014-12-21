@@ -22,6 +22,8 @@ namespace RaidScheduler.WebUI.Models
         private IList<string> timeZoneList = new List<string>();
         public IList<string> TimeZoneList { get; set; }
 
+        public string UserTimezone { get; set; }
+
         private IList<PlayerPotentialJobModel> playerPotentialJobs = new List<PlayerPotentialJobModel>();
         public IList<PlayerPotentialJobModel> PlayerPotentialJobs { get { return playerPotentialJobs; } set { playerPotentialJobs = value; } }
 
@@ -66,6 +68,8 @@ namespace RaidScheduler.WebUI.Models
         public long TimeAvailableStart { get; set; }
         [Required]
         public long TimeAvailableEnd { get; set; }
+        [Required]
+        public string Timezone { get; set; }
     }
 
     public class RaidModel

@@ -3,6 +3,9 @@
 
     self.PlayerId = ko.observable(data.PlayerId);
 
+    self.TimeZoneList = data.TimeZoneList;
+    self.UserTimezone = data.UserTimezone;
+
     self.FirstName = ko.observable(data.FirstName).extend({
         required: true
     });
@@ -50,7 +53,7 @@
         date.setHours(18);
         date.setMinutes(0);
         date.setSeconds(0);
-        var data = { "Day": "", "TimeAvailableStart": date, "TimeAvailableEnd": date}
+        var data = { "Day": "", "TimeAvailableStart": date, "TimeAvailableEnd": date, "Timezone": self.UserTimezone }
         self.DaysAndTimesAvailable.push(new DayAndTimeAvailableModel(data));
     };
 
@@ -123,6 +126,8 @@ var DayAndTimeAvailableModel = function (data) {
         var offset = date.getTimezoneOffset() * 60 * 1000;
         self.TimeAvailableEnd = ko.observable(new Date(date.valueOf() + offset));
     }
+
+    self.Timezone = ko.observable(data.Timezone);
 
     DayAndTimeAvailableModel.prototype.toJSON = function () {
         var copy = ko.toJS(this);

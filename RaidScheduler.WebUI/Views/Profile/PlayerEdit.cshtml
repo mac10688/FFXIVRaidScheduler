@@ -85,7 +85,13 @@
         <div class="col-sm-3">
             <label for="timeEnd" class="control-label">Time Availability End</label>
             <input id="timeEnd" class="" data-bind="kendoTimePicker: TimeAvailableEnd" />           
-        </div>        
+        </div>
+        
+        <div class="col-sm-3">
+            <label for="timezone" class="control-label">Timezone</label>
+            <select id="timezone" class="form-control" data-bind="options: $root.TimeZoneList, value: Timezone"></select>    
+        </div>
+        
         
         <span class="deleteButton glyphicon glyphicon-remove" data-bind="click: $root.RemoveDayAndTimeAvailable"></span>
 </div>

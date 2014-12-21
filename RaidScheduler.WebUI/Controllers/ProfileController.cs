@@ -96,6 +96,11 @@ namespace RaidScheduler.Controllers
             model.AvailableServers = _server.GetAllServers().OrderBy(x => x).ToList();
             model.TimeZoneList = timezoneSource.GetIds().OrderBy(tz => tz).ToList();
 
+            var currentUserId = User.Identity.GetUserId();
+            var playerUser = _userManager.FindById(currentUserId);
+
+            model.UserTimezone = playerUser.PreferredTimezone;
+
             if(!String.IsNullOrEmpty(playerId))
             {
                 var player = _playerRepository.Get((p) => p.PlayerId == playerId).Single();
@@ -103,6 +108,8 @@ namespace RaidScheduler.Controllers
                 model.FirstName = player.FirstName;
                 model.LastName = player.LastName;
                 model.SelectedServer = player.Server;
+
+                
 
                 model.RaidsRequested = player.RaidsRequested.Select(rr => _raidFactory.CreateRaid(rr.RaidType).RaidName).ToList();
 
@@ -112,6 +119,7 @@ namespace RaidScheduler.Controllers
                         Day = rr.DayAndTime.DayOfWeek.ToString(),
                         TimeAvailableStart = (rr.DayAndTime.TimeStart / NodaConstants.TicksPerMillisecond),
                         TimeAvailableEnd = (rr.DayAndTime.TimeEnd / NodaConstants.TicksPerMillisecond),
+                        Timezone = rr.DayAndTime.Timezone
                     }).ToList();
 
                 model.PlayerPotentialJobs = player.PotentialJobs.Select(pj =>
@@ -208,7 +216,7 @@ namespace RaidScheduler.Controllers
                     var timeEnd = timeAvailableEnd.TickOfDay;
 
                     var day = (IsoDayOfWeek)Enum.Parse(typeof(IsoDayOfWeek), d.Day, true);
-                    var dayAndTime = new DayAndTime(day, timeStart, timeEnd, playerUser.PreferredTimezone);
+                    var dayAndTime = new DayAndTime(day, timeStart, timeEnd, d.Timezone);
 
                     var availableDayaAndTime = new PlayerDayAndTimeAvailable(dayAndTime);
 
