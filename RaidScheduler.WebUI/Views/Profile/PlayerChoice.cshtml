@@ -6,8 +6,8 @@
     
     <span data-bind="visible: ShowNoPlayersText">No Players to choose. Please Create a player.</span>    
     
-    <ol data-bind="foreach: PlayerModels">
-        <li>
+    <ol class="list-group" data-bind="foreach: PlayerModels">
+        <li class="list-group-item">
             <a data-bind="click: GoToEditPlayerScreen, text: PlayerFullname"></a>&nbsp;&nbsp;
             <span class="deleteButton glyphicon glyphicon-remove" data-bind="click: $root.RemovePlayer"></span>
         </li>
