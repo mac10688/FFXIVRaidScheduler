@@ -465,7 +465,7 @@
     <Content Include="css\RaidSchedulerStyles\Login.css" />
     <Content Include="css\RaidSchedulerStyles\PlayerChoice.css" />
     <Content Include="css\RaidSchedulerStyles\PlayerEdit.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="Content\favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
