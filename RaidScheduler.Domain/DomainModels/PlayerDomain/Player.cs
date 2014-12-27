@@ -84,6 +84,15 @@ namespace RaidScheduler.Domain.DomainModels.PlayerDomain
 
         public void SetRaidsRequested(ICollection<RaidRequested> raidsRequested)
         {
+            foreach( var rr in raidsRequested)
+            {
+                var count = raidsRequested.Where(r => r.RaidRequestedId == rr.RaidRequestedId).Count();
+                if(count > 1)
+                {
+                    throw new Exception("Cannot have duplicating raids requested.");
+                }
+            }
+
             foreach (var rr in RaidsRequested.ToList())
             {
                 RaidsRequested.Remove(rr);
@@ -97,6 +106,15 @@ namespace RaidScheduler.Domain.DomainModels.PlayerDomain
 
         public void SetPotentialJobs(ICollection<PotentialJob> allPotentialJobs)
         {
+            foreach(var pj in allPotentialJobs)
+            {
+                var count = allPotentialJobs.Where(j => j.JobId == pj.JobId).Count();
+                if(count > 1)
+                {
+                    throw new Exception("Cannnot have duplicating potential jobs.");
+                }
+            }
+
             foreach (var jr in PotentialJobs.ToList())
             {
                 PotentialJobs.Remove(jr);

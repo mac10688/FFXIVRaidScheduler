@@ -27,7 +27,7 @@
         <div class="panel-body">
             <div data-bind="template: { name: 'PotentialJob-Template', foreach: PlayerPotentialJobs }"></div>
 
-            <button id="addJob" class="btn btn-primary" data-bind="click: AddNewPotentialJob">Add Potential Job</button>
+            <button id="addJob" class="btn btn-primary" data-bind="visible: CanAddJob, click: AddNewPotentialJob">Add Potential Job</button>
         </div>
     </div>
 
@@ -57,7 +57,7 @@
     <div class="col-sm-12">
         <div class="col-sm-2">
             <label for="selectJob" class="control-label">Select Job</label>
-            <select id="selectJob" class="form-control" data-bind="options: $root.PotentialJobsToChoose, optionsText: 'JobName', optionsValue: 'JobID', value: PotentialJobID"></select>
+            <select id="selectJob" class="form-control" data-bind="options: ChooseableJobs, optionsText: 'JobName', optionsValue: 'JobID', value: PotentialJobID"></select>
         </div>
 
         <div class="col-sm-2">
