@@ -42,11 +42,16 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="selectRaid" class="control-label">Select Raid</label>
-            <input id="selectRaid" data-bind="kendoMultiSelect: {data: $root.RaidsAvailable, value:$root.RaidsRequested}" />
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Raids Requested</h3>
+            </div>
+            <div class="panel-body">
+                <label for="selectRaid" class="control-label">Select Raid</label>
+                <input id="selectRaid" data-bind="kendoMultiSelect: {data: $root.RaidsAvailable, value:$root.RaidsRequested}" />    
+            </div>
         </div>
-
+        
         <div class="form-group">
             <button class="btn btn-success" type="submit">Save</button>
             <span id="saveSuccess" class="alert" style="display:none"></span>
