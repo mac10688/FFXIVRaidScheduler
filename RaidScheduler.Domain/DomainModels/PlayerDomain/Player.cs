@@ -86,7 +86,7 @@ namespace RaidScheduler.Domain.DomainModels.PlayerDomain
         {
             foreach( var rr in raidsRequested)
             {
-                var count = raidsRequested.Where(r => r.RaidRequestedId == rr.RaidRequestedId).Count();
+                var count = raidsRequested.Where(r => r.RaidType == rr.RaidType).Count();
                 if(count > 1)
                 {
                     throw new Exception("Cannot have duplicating raids requested.");
