@@ -103,7 +103,7 @@ body {
 .main {
     padding: 20px;
     background-image:url('Behemoth.png');
-    height:100vh;
+    height:calc(100vh - 50px);
     overflow-x: auto;
 }
 @media (min-width: 768px) {
